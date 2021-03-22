@@ -34,7 +34,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]}>
+    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]} py={[4, null]}>
       <Box
         w={["full", "466px"]}
         bg="white"
@@ -42,8 +42,8 @@ const ForgotPassword = () => {
         borderColor="customDark"
         borderRadius="20px"
         px={["24px", "36px"]}
-        pt="59px"
-        pb="53px"
+        pt={['32px', '59px']}
+        pb={['32px', '53px']}
         className={styles.box}
       >
         <Center>
@@ -71,7 +71,7 @@ const ForgotPassword = () => {
           </Text>
         </Center>
 
-        <Box mt="51px">
+        <Box mt={['32px', '51px']}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
               <FormControl
@@ -98,7 +98,7 @@ const ForgotPassword = () => {
           </form>
         </Box>
 
-        <Text textStyle="p2Regular" color="veryDark" mt="51px" align="center">
+        <Text textStyle="p2Regular" color="veryDark" mt={['32px', '51px']} align="center">
           Remember your password?{" "}
           <NextLink href="/login">
             <Link

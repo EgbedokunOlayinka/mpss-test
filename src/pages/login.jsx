@@ -35,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]}>
+    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]} py={[4, null]}>
       <Box
         w={["full", "466px"]}
         bg="white"
@@ -43,8 +43,8 @@ const Login = () => {
         borderColor="customDark"
         borderRadius="20px"
         px={["24px", "36px"]}
-        pt="59px"
-        pb="53px"
+        pt={['32px', '59px']}
+        pb={['32px', '53px']}
         className={styles.box}
       >
         <Heading as="h1" textStyle="h3" color="veryDark" align="center">
@@ -55,7 +55,7 @@ const Login = () => {
           Welcome Back to the Directory
         </Text>
 
-        <Box mt="51px">
+        <Box mt={['32px', '51px']}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
               <FormControl
@@ -101,7 +101,7 @@ const Login = () => {
           </form>
         </Box>
 
-        <Text textStyle="p2Regular" color="veryDark" mt="51px" align="center">
+        <Text textStyle="p2Regular" color="veryDark" mt={['32px', '51px']} align="center">
           Don't have an account?{" "}
           <NextLink href="/signup">
             <Link

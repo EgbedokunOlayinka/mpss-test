@@ -9,11 +9,14 @@ const CustomButton = (props) => {
       }}
       //   transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
       borderRadius="10px"
-      textStyle="p1Bold"
+      // textStyle="p1Bold"
+      fontWeight='600'
+      fontSize={['16px', '18px']}
       px="78px"
       py="13px"
       bg="customDark"
       color="white"
+      maxW='full'
       _disabled={{
         pointerEvents: "none",
         cursor: "not-allowed",
