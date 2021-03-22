@@ -35,7 +35,7 @@ const Signup = () => {
   };
 
   return (
-    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]} py={[2, null]}>
+    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]}>
       <Box
         w={["full", "466px"]}
         bg="white"
