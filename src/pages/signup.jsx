@@ -35,7 +35,16 @@ const Signup = () => {
   };
 
   return (
-    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]}>
+    <Box
+      display={["block", "flex"]}
+      alignItems={[null, "center"]}
+      justifyContent={[null, "center"]}
+      w="full"
+      h="100vh"
+      className={styles.pageBG}
+      px={[4, null]}
+      py={[4, null]}
+    >
       <Box
         w={["full", "466px"]}
         bg="white"
@@ -69,7 +78,7 @@ const Signup = () => {
                   placeholder="Email Address"
                   customref={register}
                 />
-                <FormErrorMessage textStyle='p2Bold'>
+                <FormErrorMessage textStyle="p2Bold">
                   <Icon as={MdErrorOutline} mr={1} />
                   <Text className={styles.error}>{errors?.email?.message}</Text>
                 </FormErrorMessage>
@@ -85,9 +94,11 @@ const Signup = () => {
                   placeholder="Password"
                   name="password"
                 />
-                <FormErrorMessage textStyle='p2Bold'>
-                <Icon as={MdErrorOutline} mr={1} />
-                  <Text className={styles.error}>{errors?.password?.message}</Text>
+                <FormErrorMessage textStyle="p2Bold">
+                  <Icon as={MdErrorOutline} mr={1} />
+                  <Text className={styles.error}>
+                    {errors?.password?.message}
+                  </Text>
                 </FormErrorMessage>
               </FormControl>
               <CustomButton
@@ -132,7 +143,7 @@ const Signup = () => {
           </NextLink>
         </Center>
       </Box>
-    </Center>
+    </Box>
   );
 };
 

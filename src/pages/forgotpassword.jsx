@@ -9,6 +9,7 @@ import {
   VStack,
   Link,
   Icon,
+  Flex,
 } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -34,7 +35,16 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]}>
+    <Box
+      display={["block", "flex"]}
+      alignItems={[null, "center"]}
+      justifyContent={[null, "center"]}
+      w="full"
+      h="100vh"
+      className={styles.pageBG}
+      px={[4, null]}
+      py={[4, null]}
+    >
       <Box
         w={["full", "466px"]}
         bg="white"
@@ -85,7 +95,7 @@ const ForgotPassword = () => {
                   placeholder="Email Address"
                   customref={register}
                 />
-                <FormErrorMessage textStyle='p2Bold'>
+                <FormErrorMessage textStyle="p2Bold">
                   <Icon as={MdErrorOutline} mr={1} />
                   <Text className={styles.error}>{errors?.email?.message}</Text>
                 </FormErrorMessage>
@@ -116,7 +126,7 @@ const ForgotPassword = () => {
           </NextLink>
         </Text>
       </Box>
-    </Center>
+    </Box>
   );
 };
 
