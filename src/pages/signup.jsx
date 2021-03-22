@@ -31,7 +31,7 @@ const Signup = () => {
 
   const onSubmit = (values) => {
     console.log(values);
-    alert(values);
+    alert(JSON.stringify(values));
   };
 
   return (
@@ -43,8 +43,8 @@ const Signup = () => {
         borderColor="customDark"
         borderRadius="20px"
         px={["24px", "36px"]}
-        pt={['32px', '59px']}
-        pb={['32px', '53px']}
+        pt={["32px", "59px"]}
+        pb={["32px", "53px"]}
         className={styles.box}
       >
         <Heading as="h1" textStyle="h3" color="veryDark" align="center">
@@ -55,7 +55,7 @@ const Signup = () => {
           Let's get you started
         </Text>
 
-        <Box mt={['32px', '51px']}>
+        <Box mt={["32px", "51px"]}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
               <FormControl
@@ -69,9 +69,9 @@ const Signup = () => {
                   placeholder="Email Address"
                   customref={register}
                 />
-                <FormErrorMessage>
+                <FormErrorMessage textStyle='p2Bold'>
                   <Icon as={MdErrorOutline} mr={1} />
-                  {errors?.email?.message}
+                  <Text className={styles.error}>{errors?.email?.message}</Text>
                 </FormErrorMessage>
               </FormControl>
               <FormControl
@@ -85,9 +85,9 @@ const Signup = () => {
                   placeholder="Password"
                   name="password"
                 />
-                <FormErrorMessage>
-                  <Icon as={MdErrorOutline} mr={1} />
-                  {errors?.password?.message}
+                <FormErrorMessage textStyle='p2Bold'>
+                <Icon as={MdErrorOutline} mr={1} />
+                  <Text className={styles.error}>{errors?.password?.message}</Text>
                 </FormErrorMessage>
               </FormControl>
               <CustomButton
@@ -100,7 +100,12 @@ const Signup = () => {
           </form>
         </Box>
 
-        <Text textStyle="p2Regular" color="veryDark" mt={['32px', '51px']} align="center">
+        <Text
+          textStyle="p2Regular"
+          color="veryDark"
+          mt={["32px", "51px"]}
+          align="center"
+        >
           Already have an account?{" "}
           <NextLink href="/login">
             <Link

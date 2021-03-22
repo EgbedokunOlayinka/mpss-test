@@ -30,7 +30,7 @@ const ForgotPassword = () => {
 
   const onSubmit = (values) => {
     console.log(values);
-    alert(values);
+    alert(JSON.stringify(values));
   };
 
   return (
@@ -42,8 +42,8 @@ const ForgotPassword = () => {
         borderColor="customDark"
         borderRadius="20px"
         px={["24px", "36px"]}
-        pt={['32px', '59px']}
-        pb={['32px', '53px']}
+        pt={["32px", "59px"]}
+        pb={["32px", "53px"]}
         className={styles.box}
       >
         <Center>
@@ -71,7 +71,7 @@ const ForgotPassword = () => {
           </Text>
         </Center>
 
-        <Box mt={['32px', '51px']}>
+        <Box mt={["32px", "51px"]}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
               <FormControl
@@ -85,9 +85,9 @@ const ForgotPassword = () => {
                   placeholder="Email Address"
                   customref={register}
                 />
-                <FormErrorMessage>
+                <FormErrorMessage textStyle='p2Bold'>
                   <Icon as={MdErrorOutline} mr={1} />
-                  {errors?.email?.message}
+                  <Text className={styles.error}>{errors?.email?.message}</Text>
                 </FormErrorMessage>
               </FormControl>
 
@@ -98,7 +98,12 @@ const ForgotPassword = () => {
           </form>
         </Box>
 
-        <Text textStyle="p2Regular" color="veryDark" mt={['32px', '51px']} align="center">
+        <Text
+          textStyle="p2Regular"
+          color="veryDark"
+          mt={["32px", "51px"]}
+          align="center"
+        >
           Remember your password?{" "}
           <NextLink href="/login">
             <Link

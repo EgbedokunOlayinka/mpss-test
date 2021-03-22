@@ -31,7 +31,7 @@ const Login = () => {
 
   const onSubmit = (values) => {
     console.log(values);
-    alert(values);
+    alert(JSON.stringify(values));
   };
 
   return (
@@ -69,9 +69,9 @@ const Login = () => {
                   placeholder="Email Address"
                   customref={register}
                 />
-                <FormErrorMessage>
-                  <Icon as={MdErrorOutline} mr={1} />
-                  {errors?.email?.message}
+                <FormErrorMessage textStyle='p2Bold'>
+                <Icon as={MdErrorOutline} mr={1} />
+                  <Text className={styles.error}>{errors?.email?.message}</Text>
                 </FormErrorMessage>
               </FormControl>
               <FormControl
@@ -85,9 +85,9 @@ const Login = () => {
                   placeholder="Password"
                   name="password"
                 />
-                <FormErrorMessage>
-                  <Icon as={MdErrorOutline} mr={1} />
-                  {errors?.password?.message}
+                <FormErrorMessage textStyle='p2Bold'>
+                <Icon as={MdErrorOutline} mr={1} />
+                  <Text className={styles.error}>{errors?.password?.message}</Text>
                 </FormErrorMessage>
               </FormControl>
               <CustomButton
