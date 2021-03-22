@@ -43,7 +43,7 @@ const Login = () => {
       h="100vh"
       className={styles.pageBG}
       px={[4, null]}
-      py={[4, null]}
+      py={[6, null]}
     >
       <Box
         w={["full", "466px"]}
