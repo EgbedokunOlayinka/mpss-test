@@ -35,7 +35,7 @@ const Signup = () => {
   };
 
   return (
-    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]} py={[4, null]}>
+    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]} py={[2, null]}>
       <Box
         w={["full", "466px"]}
         bg="white"
@@ -51,7 +51,7 @@ const Signup = () => {
           Join Directory
         </Heading>
 
-        <Text textStyle="p2Regular" color="black" align="center" mt={4}>
+        <Text textStyle="p2Regular" color="black" align="center" mt={[2, 4]}>
           Let's get you started
         </Text>
 

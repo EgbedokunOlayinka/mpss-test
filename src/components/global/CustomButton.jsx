@@ -11,7 +11,7 @@ const CustomButton = (props) => {
       borderRadius="10px"
       // textStyle="p1Bold"
       fontWeight='600'
-      fontSize={['16px', '18px']}
+      fontSize={['16px', '18px']} lineHeight='27px'
       px="78px"
       py="13px"
       bg="customDark"

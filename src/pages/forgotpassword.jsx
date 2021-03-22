@@ -34,7 +34,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]} py={[4, null]}>
+    <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]} py={[2, null]}>
       <Box
         w={["full", "466px"]}
         bg="white"
@@ -63,7 +63,7 @@ const ForgotPassword = () => {
             textStyle="p2Regular"
             color="black"
             align="center"
-            mt={4}
+            mt={[2, 4]}
             w={["full", "283px"]}
           >
             Please enter the email address linked to your account so we can send
