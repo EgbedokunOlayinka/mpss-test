@@ -9,7 +9,7 @@ export default ({ href, children, text, setSidebarOpen, sidebarOpen }) => {
 
   let className = children.props.className || "";
   let textClass;
-  let active = false;
+  let active = undefined;
   if (router.pathname === href) {
     className = `${className} selected-icon`;
     textClass = "selected-navlink";
@@ -31,7 +31,7 @@ export default ({ href, children, text, setSidebarOpen, sidebarOpen }) => {
         className={textClass}
         onClick={() => handleClick()}
       >
-        <Box h="full" mt="1.5px">
+        <Box h="full" mt={("3px", null, "1.5px")}>
           {React.cloneElement(children, { className, active })}
         </Box>
         <Link

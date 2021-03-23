@@ -38,7 +38,7 @@ const NavItems = ({ setSidebarOpen, sidebarOpen }) => {
           borderRadius="10px"
         ></Box>
 
-        <Accordion allowToggle mt="72px" px="18px">
+        <Accordion allowToggle mt={["36px", "54px", "72px"]} px="18px">
           <VStack align="start" justify="start">
             <CustomLink
               href="/home"
@@ -93,19 +93,13 @@ const NavItems = ({ setSidebarOpen, sidebarOpen }) => {
       </Flex>
 
       <Flex px="18px">
-        <CustomLink href="#">
-          <Flex w="full" py="11px" px="18px">
-            <Box h="full" mt="1.5px">
-              <LogoutIcon />
-            </Box>
-            <Link
-              color="white"
-              _hover={{ opacity: "0.85", textTransform: "none" }}
-              ml="8px"
-            >
-              Log Out
-            </Link>
-          </Flex>
+        <CustomLink
+          href="#"
+          text="Log Out"
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        >
+          <LogoutIcon />
         </CustomLink>
       </Flex>
     </Flex>
