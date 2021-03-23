@@ -5,7 +5,7 @@ const InnerPageLeft = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <Box
       bg="customDark"
-      h="full"
+      h="100%"
       py="36px"
       position="fixed"
       zIndex={1}
