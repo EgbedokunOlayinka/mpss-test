@@ -32,7 +32,7 @@ const MobileNav = ({ sidebarOpen, setSidebarOpen }) => {
         transition={{ type: "tween", ease: "easeInOut", duration: 0.5 }}
         zIndex={3}
       >
-        <Box bg="customDark" h="100%" py={['24px', '36px']}>
+        <Box bg="customDark" h="100%" py='36px'>
           <NavItems sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         </Box>
       </MotionBox>

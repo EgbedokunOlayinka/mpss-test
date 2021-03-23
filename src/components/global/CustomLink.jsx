@@ -26,12 +26,12 @@ export default ({ href, children, text, setSidebarOpen, sidebarOpen }) => {
     <NextLink href={href}>
       <Flex
         w="full"
-        py={['7px', '11px']}
+        py={["9px", "11px"]}
         px="21px"
         className={textClass}
         onClick={() => handleClick()}
       >
-        <Box h="full" mt={("8px", null, "1.5px")}>
+        <Box h="full" mt={["5px", null, "1.5px"]}>
           {React.cloneElement(children, { className, active })}
         </Box>
         <Link
