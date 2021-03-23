@@ -5,9 +5,13 @@ import { theme } from "../theme";
 import "../styles/globals.scss";
 
 const WrappedApp = ({ Component, pageProps }) => {
+  const Layout = Component.Layout ? Component.Layout : React.Fragment;
+
   return (
     <ChakraProvider theme={theme} resetCSS={true}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ChakraProvider>
   );
 };
