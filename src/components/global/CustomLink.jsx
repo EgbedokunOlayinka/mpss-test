@@ -31,7 +31,7 @@ export default ({ href, children, text, setSidebarOpen, sidebarOpen }) => {
         className={textClass}
         onClick={() => handleClick()}
       >
-        <Box h="full" mt={["5px", null, "1.5px"]}>
+        <Box h="full" mt={["2.5px", null, "1.5px"]}>
           {React.cloneElement(children, { className, active })}
         </Box>
         <Link
