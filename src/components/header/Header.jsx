@@ -18,7 +18,7 @@ const Header = ({ title, sidebarOpen, setSidebarOpen }) => {
   return (
     <Flex justify="space-between" align="center">
       {isSmallerThan768 && (
-        <Hamburger sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Hamburger mt={1} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
 
       <Heading textStyle={["h4", "h3"]} color="customDark">
