@@ -4,6 +4,7 @@ import InnerPageLayout from "../components/layout/InnerPageLayout";
 import InnerPageHeader from "../components/header/InnerPageHeader";
 import ContactsListView from "../components/contacts/ContactsListView";
 import ContactsGridView from "../components/contacts/ContactsGridView";
+import InnerPageFooter from "../components/global/InnerPageFooter";
 
 let filledArray = new Array(20)
   .fill("a")
