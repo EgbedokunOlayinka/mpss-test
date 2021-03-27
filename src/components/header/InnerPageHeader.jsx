@@ -58,7 +58,11 @@ const InnerPageHeader = ({
 
           <HStack
             spacing={["16px", "32px", "16px", "32px"]}
-            ml={[null, "39px", "19px", "39px"]}
+            ml={
+              listView
+                ? [null, "39px", "19px", "39px"]
+                : [null, null, "19px", "39px"]
+            }
             mt={[6, 0]}
           >
             <CustomSort />

@@ -5,6 +5,7 @@ import InnerPageHeader from "../components/header/InnerPageHeader";
 import CirclesGridView from "../components/circles/CirclesGridView";
 import CirclesListView from "../components/circles/CirclesListView";
 import InnerPageFooter from "../components/global/InnerPageFooter";
+import CustomAddIcon from "../components/global/CustomAddButton";
 
 let filledArray = new Array(20)
   .fill("a")
@@ -40,6 +41,8 @@ const Circles = ({ sidebarOpen, setSidebarOpen }) => {
         setPageNum={setPageNum}
         pageChange={pageChange}
       />
+
+      <CustomAddIcon label="Add Circle" listView={listView} />
     </Box>
   );
 };

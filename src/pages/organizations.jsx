@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Box, Text, HStack, Icon } from "@chakra-ui/react";
+import { Box, Text, HStack, Icon, IconButton } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import InnerPageLayout from "../components/layout/InnerPageLayout";
 import InnerPageHeader from "../components/header/InnerPageHeader";
 import OrganizationsListView from "../components/organizations/OrganizationsListView";
 import OrganizationsGridView from "../components/organizations/OrganizationsGridView";
 import InnerPageFooter from "../components/global/InnerPageFooter";
+import CustomAddIcon from "../components/global/CustomAddButton";
 
 let filledArray = new Array(20)
   .fill("a")
@@ -40,6 +42,8 @@ const Organizations = ({ sidebarOpen, setSidebarOpen }) => {
         setPageNum={setPageNum}
         pageChange={pageChange}
       />
+
+      <CustomAddIcon label="Add Organization" listView={listView} />
     </Box>
   );
 };

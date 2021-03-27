@@ -19,6 +19,7 @@ const InnerPageFooter = ({ pageNum, setPageNum, pageChange }) => {
       justifyContent="space-between"
       w="full"
       pb={12}
+      pt={4}
     >
       <Flex align="center" justify={["center", "auto"]}>
         <Text textStyle="p3Regular" color="veryDark">

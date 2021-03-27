@@ -5,6 +5,7 @@ import InnerPageHeader from "../components/header/InnerPageHeader";
 import ContactsListView from "../components/contacts/ContactsListView";
 import ContactsGridView from "../components/contacts/ContactsGridView";
 import InnerPageFooter from "../components/global/InnerPageFooter";
+import CustomAddIcon from "../components/global/CustomAddButton";
 
 let filledArray = new Array(20)
   .fill("a")
@@ -40,6 +41,8 @@ const Contacts = ({ sidebarOpen, setSidebarOpen }) => {
         setPageNum={setPageNum}
         pageChange={pageChange}
       />
+
+      <CustomAddIcon label="Add Contact" listView={listView} />
     </Box>
   );
 };
