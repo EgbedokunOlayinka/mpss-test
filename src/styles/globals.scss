@@ -7,7 +7,8 @@
 // html {
 //   height: -webkit-fill-available;
 // }
-body, html {
+body,
+html {
   height: 100%;
 }
 
@@ -17,3 +18,30 @@ body, html {
   border-radius: 6px;
   font-weight: 700;
 }
+
+// @media screen and (min-width: 768px) {
+//   ::-webkit-scrollbar-track {
+//     margin: 27px;
+//   }
+
+//   .custom-scrollbar::-webkit-scrollbar-track {
+//     margin: 4px;
+//   }
+
+//   ::-webkit-scrollbar {
+//     width: 20px;
+//     height: 20px;
+//     background-color: transparent;
+//   }
+
+//   ::-webkit-scrollbar-thumb {
+//     width: 10px;
+//     height: 10px;
+//     border-radius: 10px;
+//     border: 6px solid transparent;
+//     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+//     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+//     background-color: #a4bbdf;
+//     background-clip: padding-box;
+//   }
+// }

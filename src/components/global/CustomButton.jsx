@@ -15,7 +15,7 @@ const CustomButton = (props) => {
       // lineHeight={["8px", null]}
       px="78px"
       // py="13px"
-      h='54px'
+      h="54px"
       bg="customDark"
       color="white"
       maxW="full"

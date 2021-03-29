@@ -6,7 +6,7 @@ import InnerPageHeader from "../components/header/InnerPageHeader";
 import OrganizationsListView from "../components/organizations/OrganizationsListView";
 import OrganizationsGridView from "../components/organizations/OrganizationsGridView";
 import InnerPageFooter from "../components/global/InnerPageFooter";
-import CustomAddIcon from "../components/global/CustomAddButton";
+import CustomAddButton from "../components/global/CustomAddButton";
 
 let filledArray = new Array(20)
   .fill("a")
@@ -43,7 +43,7 @@ const Organizations = ({ sidebarOpen, setSidebarOpen }) => {
         pageChange={pageChange}
       />
 
-      <CustomAddIcon label="Add Organization" listView={listView} />
+      <CustomAddButton label="Add Organization" listView={listView} />
     </Box>
   );
 };

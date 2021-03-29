@@ -4,3 +4,7 @@
 .custominput:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
+
+.error:first-letter {
+  text-transform: capitalize;
+}

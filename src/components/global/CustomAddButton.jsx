@@ -1,7 +1,7 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 
-const CustomAddIcon = ({ label, listView }) => {
+const CustomAddButton = ({ label, listView, ...props }) => {
   return (
     <IconButton
       icon={<AddIcon color={listView ? "accentOne" : "white"} />}
@@ -16,8 +16,9 @@ const CustomAddIcon = ({ label, listView }) => {
       w="50px"
       h="50px"
       _hover={{ bg: listView ? "#eaeaea" : "#193a73" }}
+      {...props}
     />
   );
 };
 
-export default CustomAddIcon;
+export default CustomAddButton;

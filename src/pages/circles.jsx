@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import InnerPageLayout from "../components/layout/InnerPageLayout";
 import InnerPageHeader from "../components/header/InnerPageHeader";
 import CirclesGridView from "../components/circles/CirclesGridView";
 import CirclesListView from "../components/circles/CirclesListView";
 import InnerPageFooter from "../components/global/InnerPageFooter";
-import CustomAddIcon from "../components/global/CustomAddButton";
+import CustomAddButton from "../components/global/CustomAddButton";
+import CreateNewCircle from "../components/modals/CreateNewCircle";
 
 let filledArray = new Array(20)
   .fill("a")
@@ -15,6 +16,8 @@ const Circles = ({ sidebarOpen, setSidebarOpen }) => {
   const [listView, setListView] = useState(false);
   const [pageNum, setPageNum] = useState(1);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const pageChange = (e) => {
     e.preventDefault();
     return;
@@ -22,6 +25,8 @@ const Circles = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <Box position="relative" h="100%">
+      <CreateNewCircle isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+
       <InnerPageHeader
         title="Circles"
         sidebarOpen={sidebarOpen}
@@ -42,7 +47,11 @@ const Circles = ({ sidebarOpen, setSidebarOpen }) => {
         pageChange={pageChange}
       />
 
-      <CustomAddIcon label="Add Circle" listView={listView} />
+      <CustomAddButton
+        label="Add Circle"
+        listView={listView}
+        onClick={() => onOpen()}
+      />
     </Box>
   );
 };
