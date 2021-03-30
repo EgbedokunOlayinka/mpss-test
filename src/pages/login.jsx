@@ -102,7 +102,6 @@ const Login = () => {
                 </FormErrorMessage>
               </FormControl>
               <CustomButton
-                onClick={handleSubmit(onSubmit)}
                 disabled={!!errors.email || !!errors.password}
                 type="submit"
               >

@@ -25,7 +25,7 @@ import styles from "../../styles/components/CustomInputBig.module.scss";
 import CustomModalButton from "../global/CustomModalButton";
 
 const schema = yup.object().shape({
-  circleName: yup.string().email().required(),
+  circleName: yup.string().required(),
   circleDescription: yup.string().required(),
   circleUsers: yup.string().required(),
   circleColor: yup.string().min(7).required(),
@@ -43,6 +43,7 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
   const onSubmit = (values) => {
     console.log(values);
     alert(JSON.stringify(values));
+    onClose();
   };
 
   return (
@@ -54,7 +55,12 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
       scrollBehavior={scrollBehavior}
     >
       <ModalOverlay />
-      <ModalContent bg="white">
+      <ModalContent
+        bg="white"
+        border="0.5px solid #293c73"
+        borderRadius="20px"
+        style={modalStyles}
+      >
         <ModalBody px={0}>
           <Box py={6} borderBottom="0.5px solid #293c73">
             <Text color="customDark" textStyle="h4" align="center">
@@ -135,8 +141,12 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
               </VStack>
 
               <Flex mt={8} align="center" justify="space-between">
-                <CustomModalButton dark={false}>Cancel</CustomModalButton>
-                <CustomModalButton dark={true}>Create</CustomModalButton>
+                <CustomModalButton onClick={() => onClose()} dark={false}>
+                  Cancel
+                </CustomModalButton>
+                <CustomModalButton type="submit" dark={true}>
+                  Create
+                </CustomModalButton>
               </Flex>
             </form>
           </Box>
@@ -144,6 +154,10 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
       </ModalContent>
     </Modal>
   );
+};
+
+const modalStyles = {
+  boxShadow: "0px 6px 10px rgba(41, 60, 115, 0.17)",
 };
 
 export default CreateNewCircle;

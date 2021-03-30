@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 
-const CustomModalButton = ({ children, dark, ...props }) => {
+const CustomModalButton = ({ children, dark, full, breadth, ...props }) => {
   return (
     <Button
       _hover={{
@@ -8,7 +8,8 @@ const CustomModalButton = ({ children, dark, ...props }) => {
       }}
       borderRadius="7px"
       textStyle="p2Bold"
-      w="140px"
+      maxW={full ? "full" : "140px"}
+      w={breadth ? breadth : "full"}
       h="47px"
       bg={dark ? "customDark" : "greyOne"}
       color={dark ? "white" : "veryDark"}

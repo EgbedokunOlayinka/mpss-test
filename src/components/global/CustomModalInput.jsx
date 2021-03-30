@@ -17,17 +17,30 @@ const CustomModalInput = ({
   customref,
   errors,
   placeholder,
+  subtitle,
 }) => {
-  console.log(errors);
   return (
     <FormControl
       isInvalid={!!errors?.[name]?.message}
       errortext={errors?.[name]?.message}
       isRequired={required ? "true" : "false"}
     >
-      <FormLabel htmlFor={name} color="veryDark" textStyle="p2Bold">
-        {title}
-      </FormLabel>
+      {title && (
+        <FormLabel
+          htmlFor={name}
+          color="veryDark"
+          textStyle="p2Bold"
+          mb={subtitle && 0}
+          pb={subtitle && 0}
+        >
+          {title}
+        </FormLabel>
+      )}
+      {subtitle && (
+        <Text color="greyTwo" textStyle="p3Regular" mb={2}>
+          {subtitle}
+        </Text>
+      )}
       <CustomInputSmall
         type="text"
         name={name}

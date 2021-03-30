@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Menu,
   MenuButton,
@@ -7,12 +8,8 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import OrganizationDropIcon from "../icons/OrganizationDropIcon";
-import CircleDropIcon from "../icons/CircleDropIcon";
-import ContactDropIcon from "../icons/ContactDropIcon";
 
-const HomeMenuOptions = ({ onOpenContacts, onOpenOrganizations }) => {
+const CustomModalMenuOptions = () => {
   return (
     <Menu>
       <MenuButton
@@ -28,35 +25,18 @@ const HomeMenuOptions = ({ onOpenContacts, onOpenOrganizations }) => {
         Add New
       </MenuButton>
       <MenuList>
-        <MenuItem
-          textStyle="p2Regular"
-          color="veryDark"
-          onClick={() => onOpenContacts()}
-        >
+        <MenuItem textStyle="p2Regular" color="veryDark">
           <Flex>
-            <Box mt="2px">
-              <ContactDropIcon />
-            </Box>
             <Text ml={2}>Contacts</Text>
           </Flex>
         </MenuItem>
-        <MenuItem
-          textStyle="p2Regular"
-          color="veryDark"
-          onClick={() => onOpenOrganizations()}
-        >
+        <MenuItem textStyle="p2Regular" color="veryDark">
           <Flex>
-            <Box mt="2px">
-              <OrganizationDropIcon />
-            </Box>
             <Text ml={2}>Organizations</Text>
           </Flex>
         </MenuItem>
         <MenuItem textStyle="p2Regular" color="veryDark">
           <Flex>
-            <Box mt="2px">
-              <CircleDropIcon />
-            </Box>
             <Text ml={2}>Circles</Text>
           </Flex>
         </MenuItem>
@@ -65,4 +45,4 @@ const HomeMenuOptions = ({ onOpenContacts, onOpenOrganizations }) => {
   );
 };
 
-export default HomeMenuOptions;
+export default CustomModalMenuOptions;

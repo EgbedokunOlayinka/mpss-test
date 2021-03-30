@@ -1,11 +1,37 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import InnerPageLayout from "../components/layout/InnerPageLayout";
 import Header from "../components/header/Header";
 import HomeMenuOptions from "../components/home/HomeMenuOptions";
+import AddNewContact from "../components/modals/AddNewContact";
+import AddNewOrganization from "../components/modals/AddNewOrganization";
 
 const Home = ({ sidebarOpen, setSidebarOpen }) => {
+  const {
+    isOpen: isOpenContacts,
+    onOpen: onOpenContacts,
+    onClose: onCloseContacts,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenOrganizations,
+    onOpen: onOpenOrganizations,
+    onClose: onCloseOrganizations,
+  } = useDisclosure();
+
   return (
     <Box position="relative" h="100%">
+      <AddNewContact
+        isOpen={isOpenContacts}
+        onOpen={onOpenContacts}
+        onClose={onCloseContacts}
+      />
+
+      <AddNewOrganization
+        isOpen={isOpenOrganizations}
+        onOpen={onOpenOrganizations}
+        onClose={onCloseOrganizations}
+      />
+
       <Header
         title="Home"
         sidebarOpen={sidebarOpen}
@@ -13,7 +39,10 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
       />
 
       <Box position="absolute" right="0px" bottom="0px">
-        <HomeMenuOptions />
+        <HomeMenuOptions
+          onOpenContacts={onOpenContacts}
+          onOpenOrganizations={onOpenOrganizations}
+        />
       </Box>
 
       {/* <Box
