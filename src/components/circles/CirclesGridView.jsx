@@ -4,7 +4,7 @@ import CircleCard from "./CircleCard";
 
 const CiclesGridView = ({ data }) => {
   return (
-    <InnerPageGrid size="190">
+    <InnerPageGrid size="340">
       {data.map((circle, index) => (
         <CircleCard circle={circle} key={index} />
       ))}

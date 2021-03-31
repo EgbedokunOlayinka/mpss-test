@@ -13,6 +13,7 @@ const CustomModalSelect = ({
   subtitle,
   placeholder,
   styled,
+  auth,
 }) => {
   return (
     <FormControl
@@ -42,9 +43,9 @@ const CustomModalSelect = ({
         icon={<MdArrowDropDown />}
         name={name}
         ref={customref}
-        h="42px"
+        h={auth ? "54px" : "42px"}
+        borderRadius={auth ? "10px" : "7px"}
         borderColor="greyOne"
-        borderRadius="7px"
         bg="white"
         placeholder={placeholder ? placeholder : null}
         color={styled && "greyTwo"}

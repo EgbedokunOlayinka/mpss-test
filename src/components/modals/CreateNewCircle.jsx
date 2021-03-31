@@ -23,11 +23,15 @@ import CustomModalInput from "../global/CustomModalInput";
 import CustomModalTextarea from "../global/CustomModalTextarea";
 import styles from "../../styles/components/CustomInputBig.module.scss";
 import CustomModalButton from "../global/CustomModalButton";
+import CustomModalSelect from "../global/CustomModalSelect";
+import titles from "../../data/titles.json";
 
 const schema = yup.object().shape({
   circleName: yup.string().required(),
   circleDescription: yup.string().required(),
   circleUsers: yup.string().required(),
+  circleManager: yup.string().required(),
+  asstCircleManager: yup.string().required(),
   circleColor: yup.string().min(7).required(),
 });
 
@@ -92,6 +96,28 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
                   required={true}
                   errors={errors}
                   placeholder="Please select users"
+                />
+
+                <CustomModalSelect
+                  name="circleManager"
+                  customref={register}
+                  required={true}
+                  errors={errors}
+                  data={titles}
+                  placeholder="Please select a circle manager"
+                  styled={true}
+                  title="Circle Manager"
+                />
+
+                <CustomModalSelect
+                  name="asstCircleManager"
+                  customref={register}
+                  required={true}
+                  errors={errors}
+                  data={titles}
+                  placeholder="Please select an assistant circle manager"
+                  styled={true}
+                  title="Assistant Circle Manager"
                 />
                 <FormControl
                   isInvalid={!!errors?.circleColor?.message}
