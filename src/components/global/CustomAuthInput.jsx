@@ -16,8 +16,12 @@ const CustomAuthInput = ({
   title,
   customref,
   errors,
+  type,
   placeholder,
   subtitle,
+  group,
+  func,
+  toggleValue,
 }) => {
   return (
     <FormControl
@@ -42,10 +46,13 @@ const CustomAuthInput = ({
         </Text>
       )}
       <CustomInputBig
-        type="text"
+        type={type ? type : "text"}
         name={name}
         customref={customref}
         placeholder={placeholder ? placeholder : null}
+        group={group && group}
+        func={func && func}
+        toggleValue={toggleValue}
       />
       <FormErrorMessage textStyle="p2Bold">
         <Icon as={MdErrorOutline} mr={1} />

@@ -16,7 +16,7 @@ import styles from "../../styles/components/PageCard.module.scss";
 
 const ContactCard = ({ contact }) => {
   return (
-    <Box maxW="206px" className={styles.card}>
+    <Box maxW={['260px', '256px']} px={[4, 6]} py={6} h={['314px', '300px']} className={styles.card}>
       <Center h="72px">
         <Circle size="72px" borderWidth="0.5px" borderColor="greyTwo"></Circle>
       </Center>

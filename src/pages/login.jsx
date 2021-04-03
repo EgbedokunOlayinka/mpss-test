@@ -17,13 +17,19 @@ import styles from "../styles/pages/Login.module.scss";
 import CustomInputBig from "../components/global/CustomInputBig";
 import CustomButton from "../components/global/CustomButton";
 import { MdErrorOutline } from "react-icons/md";
+import CustomAuthInput from "../components/global/CustomAuthInput";
+import { useState } from "react";
+import EnsureGuest from "../hooks/EnsureGuest";
+import { connect } from "react-redux";
+import { userLogin } from "../store/user/actions";
+import CustomAlert from "../components/global/CustomAlert";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
 });
 
-const Login = () => {
+const Login = ({ user: { loading, user, error }, userLogin }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -31,7 +37,13 @@ const Login = () => {
 
   const onSubmit = (values) => {
     console.log(values);
-    alert(JSON.stringify(values));
+    userLogin(values);
+  };
+
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  const togglePassword = () => {
+    setPasswordShown((value) => setPasswordShown(!value));
   };
 
   return (
@@ -67,41 +79,31 @@ const Login = () => {
         <Box mt={["32px", "51px"]}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
-              <FormControl
-                isInvalid={!!errors?.email?.message}
-                errortext={errors?.email?.message}
-                isRequired
-              >
-                <CustomInputBig
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  customref={register}
-                />
-                <FormErrorMessage textStyle="p2Bold">
-                  <Icon as={MdErrorOutline} mr={1} />
-                  <Text className={styles.error}>{errors?.email?.message}</Text>
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl
-                isInvalid={!!errors?.password?.message}
-                errortext={errors?.password?.message}
-                isRequired
-              >
-                <CustomInputBig
-                  customref={register}
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                />
-                <FormErrorMessage textStyle="p2Bold">
-                  <Icon as={MdErrorOutline} mr={1} />
-                  <Text className={styles.error}>
-                    {errors?.password?.message}
-                  </Text>
-                </FormErrorMessage>
-              </FormControl>
+              <CustomAuthInput
+                name="email"
+                type="email"
+                placeholder="Email Address"
+                customref={register}
+                required={true}
+                errors={errors}
+              />
+
+              <CustomAuthInput
+                name="password"
+                type={passwordShown ? "text" : "password"}
+                placeholder="Password"
+                customref={register}
+                required={true}
+                errors={errors}
+                group={true}
+                func={togglePassword}
+                toggleValue={passwordShown}
+              />
+
+              {error && <CustomAlert rad="10px" text={error} />}
+
               <CustomButton
+                isLoading={loading}
                 disabled={!!errors.email || !!errors.password}
                 type="submit"
               >
@@ -147,4 +149,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { userLogin })(EnsureGuest(Login));

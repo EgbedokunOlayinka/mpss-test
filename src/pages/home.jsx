@@ -5,7 +5,11 @@ import HomeMenuOptions from "../components/home/HomeMenuOptions";
 import AddNewContact from "../components/modals/AddNewContact";
 import AddNewOrganization from "../components/modals/AddNewOrganization";
 
+import useEnsureUser from "../hooks/useEnsureUser";
+
 const Home = ({ sidebarOpen, setSidebarOpen }) => {
+  // const user = useEnsureUser();
+
   const {
     isOpen: isOpenContacts,
     onOpen: onOpenContacts,

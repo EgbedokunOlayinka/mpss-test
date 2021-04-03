@@ -3,7 +3,7 @@ import styles from "../../styles/components/PageCard.module.scss";
 
 const OrganizationCard = ({ organization }) => {
   return (
-    <Box maxW="206px" className={styles.card}>
+    <Box maxW={['260px', '256px']} px={[4, 6]} py={6} h={['314px', '300px']} className={styles.card}>
       <Center h="64px">
         <Box
           w="64px"
@@ -46,7 +46,7 @@ const OrganizationCard = ({ organization }) => {
       </Text>
 
       <Flex
-        px="20px"
+        px={['40px', '20px']}
         mt={4}
         align="center"
         justify="space-between"

@@ -18,12 +18,20 @@ import styles from "../styles/pages/Login.module.scss";
 import CustomInputBig from "../components/global/CustomInputBig";
 import CustomButton from "../components/global/CustomButton";
 import { MdErrorOutline } from "react-icons/md";
+import EnsureGuest from "../hooks/EnsureGuest";
+import { connect } from "react-redux";
+import { userForgotPassword } from "../store/user/actions";
+import CustomAlert from "../components/global/CustomAlert";
+import CustomAuthInput from "../components/global/CustomAuthInput";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
 });
 
-const ForgotPassword = () => {
+const ForgotPassword = ({
+  user: { forgotLoading, forgotSuccess, forgotError },
+  userForgotPassword,
+}) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -31,7 +39,7 @@ const ForgotPassword = () => {
 
   const onSubmit = (values) => {
     console.log(values);
-    alert(JSON.stringify(values));
+    userForgotPassword(values);
   };
 
   return (
@@ -84,24 +92,22 @@ const ForgotPassword = () => {
         <Box mt={["32px", "51px"]}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={8}>
-              <FormControl
-                isInvalid={!!errors?.email?.message}
-                errortext={errors?.email?.message}
-                isRequired
-              >
-                <CustomInputBig
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  customref={register}
-                />
-                <FormErrorMessage textStyle="p2Bold">
-                  <Icon as={MdErrorOutline} mr={1} />
-                  <Text className={styles.error}>{errors?.email?.message}</Text>
-                </FormErrorMessage>
-              </FormControl>
+              <CustomAuthInput
+                name="email"
+                type="email"
+                placeholder="Email Address"
+                customref={register}
+                required={true}
+                errors={errors}
+              />
 
-              <CustomButton disabled={!!errors.email} type="submit">
+              {forgotError && <CustomAlert rad="10px" text={forgotError} />}
+
+              <CustomButton
+                isLoading={forgotLoading}
+                disabled={!!errors.email}
+                type="submit"
+              >
                 Submit Email Address
               </CustomButton>
             </VStack>
@@ -130,4 +136,10 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { userForgotPassword })(
+  EnsureGuest(ForgotPassword)
+);
