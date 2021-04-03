@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormLabel,
   FormControl,
@@ -9,32 +9,151 @@ import {
   Center,
   Flex,
 } from "@chakra-ui/react";
-import CustomModalStepper from "./CustomModalStepper";
+// import CustomModalStepper from "./CustomModalStepper";
+import CustomModalStepperSm from "./CustomModalStepperSm";
 
-const TimeStep = ({ day }) => {
+const TimeStep = ({ data, setDaysData }) => {
   return (
-    <Grid templateColumns="2fr 1.5fr 1.5fr" gap={[4, 8]} justify="center">
+    <Grid templateColumns="1fr 1fr 1fr" gap={4} justify="center">
       <Flex align="center" w="full" h="full">
         <Text textStyle="p2Regular" color="veryDark" align="left">
-          {day}
+          {data.text}
         </Text>
       </Flex>
       <Box w="full" h="full">
-        <CustomModalStepper
+        <CustomModalStepperSm
           min={0}
           max={24}
-          placeholder="00:00"
+          placeholder="00"
           length="32px"
+          data={data}
+          setDaysData={setDaysData}
+          hour={data.openingHour}
+          minute={data.openingMinute}
+          tag="opening"
         />
       </Box>
       <Box w="full" h="full">
-        <CustomModalStepper min={0} max={24} placeholder="00:00" />
+        <CustomModalStepperSm
+          min={0}
+          max={59}
+          placeholder="00"
+          length="32px"
+          data={data}
+          setDaysData={setDaysData}
+          hour={data.closingHour}
+          minute={data.closingMinute}
+          tag="closing"
+        />
       </Box>
     </Grid>
   );
 };
 
 const TimeStepper = () => {
+  const daysArray = [
+    {
+      text: "Monday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Tuesday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Wednesday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Thursday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Friday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Saturday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Sunday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+  ];
+  const [daysData, setDaysData] = useState([
+    {
+      text: "Monday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Tuesday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Wednesday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Thursday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Friday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Saturday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Sunday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+  ]);
+
   return (
     <FormControl>
       <FormLabel htmlFor={name} color="veryDark" textStyle="p2Bold">
@@ -42,7 +161,7 @@ const TimeStepper = () => {
       </FormLabel>
 
       <Grid direction="column" gap={3}>
-        <Grid templateColumns="2fr 1.5fr 1.5fr" gap={[4, 8]}>
+        <Grid templateColumns="1fr 1fr 1fr" gap={[4, 8]}>
           <Box w="full" h="full"></Box>
           <Box w="full" h="full">
             <Text textStyle="p3Regular" color="greyTwo" align="center">
@@ -55,13 +174,11 @@ const TimeStepper = () => {
             </Text>
           </Box>
         </Grid>
-        <TimeStep day="Monday" />
-        <TimeStep day="Tuesday" />
-        <TimeStep day="Wednesday" />
-        <TimeStep day="Thursday" />
-        <TimeStep day="Friday" />
-        <TimeStep day="Saturday" />
-        <TimeStep day="Sunday" />
+        {daysData.map((item) => {
+          return (
+            <TimeStep key={item.text} data={item} setDaysData={setDaysData} />
+          );
+        })}
       </Grid>
     </FormControl>
   );

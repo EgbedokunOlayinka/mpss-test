@@ -1,6 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import NavItems from "./NavItems";
 
+import dynamic from "next/dynamic";
+
+// const NavItems = dynamic(() => import("./NavItems"), { ssr: false });
+
 const InnerPageLeft = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <Box
@@ -11,7 +15,7 @@ const InnerPageLeft = ({ sidebarOpen, setSidebarOpen }) => {
       zIndex={1}
       w="213px"
     >
-      <NavItems />
+      <NavItems sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
     </Box>
   );
 };

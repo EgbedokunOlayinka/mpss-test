@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Box, useMediaQuery } from "@chakra-ui/react";
-import InnerPageLeft from "./InnerPageLeft";
-import InnerPageRight from "./InnerPageRight";
-import MobileNav from "./MobileNav";
+// import InnerPageLeft from "./InnerPageLeft";
+// import InnerPageRight from "./InnerPageRight";
+// import MobileNav from "./MobileNav";
 import Div100vh from "react-div-100vh";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Loader from '../global/Loader';
+import dynamic from "next/dynamic";
+
+const InnerPageLeft = dynamic(() => import("./InnerPageLeft"), { ssr: false });
+const InnerPageRight = dynamic(() => import("./InnerPageRight"), { ssr: false });
+const MobileNav = dynamic(() => import("./MobileNav"), { ssr: false });
 
 const InnerPageLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

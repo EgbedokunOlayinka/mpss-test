@@ -4,11 +4,13 @@ import Header from "../components/header/Header";
 import HomeMenuOptions from "../components/home/HomeMenuOptions";
 import AddNewContact from "../components/modals/AddNewContact";
 import AddNewOrganization from "../components/modals/AddNewOrganization";
+import { useRef } from "react";
 
 import useEnsureUser from "../hooks/useEnsureUser";
 
 const Home = ({ sidebarOpen, setSidebarOpen }) => {
   // const user = useEnsureUser();
+  const initialRef = useRef();
 
   const {
     isOpen: isOpenContacts,
@@ -34,6 +36,7 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
         isOpen={isOpenOrganizations}
         onOpen={onOpenOrganizations}
         onClose={onCloseOrganizations}
+        initialRef={initialRef}
       />
 
       <Header
@@ -42,7 +45,7 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
         setSidebarOpen={setSidebarOpen}
       />
 
-      <Box position="absolute" right="0px" bottom="0px">
+      <Box position="absolute" right="0px" bottom="0px" ref={initialRef}>
         <HomeMenuOptions
           onOpenContacts={onOpenContacts}
           onOpenOrganizations={onOpenOrganizations}
