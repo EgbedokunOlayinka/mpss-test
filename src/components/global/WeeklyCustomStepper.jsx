@@ -8,7 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-const CustomModalStepperSm = ({
+const WeeklyCustomStepper = ({
   placeholder,
   name,
   customref,
@@ -21,41 +21,10 @@ const CustomModalStepperSm = ({
   hour,
   minute,
   tag,
+  hourFunc,
+  minFunc,
+  index,
 }) => {
-  const handleChangeHour = (val) => {
-    setDaysData((daysData) => {
-      let newArr = [...daysData];
-      newArr.forEach((item) => {
-        if (item.text === data.text) {
-          if (tag === "opening") {
-            item.openingHour = val;
-          } else if (tag === "closing") {
-            item.closingHour = val;
-          }
-        }
-      });
-
-      return newArr;
-    });
-  };
-
-  const handleChangeMinute = (val) => {
-    setDaysData((daysData) => {
-      let newArr = [...daysData];
-      newArr.forEach((item) => {
-        if (item.text === data.text) {
-          if (tag === "opening") {
-            item.openingMinute = val;
-          } else if (tag === "closing") {
-            item.closingMinute = val;
-          }
-        }
-      });
-
-      return newArr;
-    });
-  };
-
   const minTwoDigits = (n) => {
     return (n < 10 ? "0" : "") + n;
   };
@@ -67,7 +36,7 @@ const CustomModalStepperSm = ({
         min={min}
         max={hourMax}
         value={minTwoDigits(hour)}
-        onChange={(val) => handleChangeHour(val)}
+        onChange={(val) => hourFunc(val, index, tag)}
       >
         <NumberInputField
           h={length ? length : "full"}
@@ -104,7 +73,7 @@ const CustomModalStepperSm = ({
         min={min}
         max={minuteMax}
         value={minTwoDigits(minute)}
-        onChange={(val) => handleChangeMinute(val)}
+        onChange={(val) => minFunc(val, index, tag)}
       >
         <NumberInputField
           h={length ? length : "full"}
@@ -135,4 +104,4 @@ const CustomModalStepperSm = ({
   );
 };
 
-export default CustomModalStepperSm;
+export default WeeklyCustomStepper;

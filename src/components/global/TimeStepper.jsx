@@ -23,7 +23,8 @@ const TimeStep = ({ data, setDaysData }) => {
       <Box w="full" h="full">
         <CustomModalStepperSm
           min={0}
-          max={24}
+          minuteMax={59}
+          hourMax={24}
           placeholder="00"
           length="32px"
           data={data}
@@ -36,7 +37,8 @@ const TimeStep = ({ data, setDaysData }) => {
       <Box w="full" h="full">
         <CustomModalStepperSm
           min={0}
-          max={59}
+          minuteMax={59}
+          hourMax={24}
           placeholder="00"
           length="32px"
           data={data}

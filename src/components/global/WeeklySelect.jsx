@@ -3,53 +3,39 @@ import { FormControl, FormLabel, Select, Text, Box } from "@chakra-ui/react";
 import { MdArrowDropDown } from "react-icons/md";
 import styles from "../../styles/components/CustomModalSelect.module.scss";
 
-const CustomModalSelect = ({
-  required,
-  name,
+const WeeklySelect = ({
   title,
-  customref,
-  errors,
   data,
-  subtitle,
-  placeholder,
+  func,
+  value,
+  index,
   styled,
-  auth,
+  placeholder,
 }) => {
   return (
     <FormControl
-      isInvalid={!!errors?.[name]?.message}
-      errortext={errors?.[name]?.message}
-      isRequired={required ? "true" : "false"}
+      //   isInvalid={!!errors?.[name]?.message}
+      isRequired={true}
     >
       {title && (
-        <FormLabel
-          htmlFor={name}
-          color="veryDark"
-          textStyle="p2Bold"
-          mb={subtitle && 0}
-          pb={subtitle && 0}
-        >
+        <FormLabel htmlFor={name} color="veryDark" textStyle="p2Bold">
           {title}
         </FormLabel>
-      )}
-
-      {subtitle && (
-        <Text color="greyTwo" textStyle="p3Regular" mb={2}>
-          {subtitle}
-        </Text>
       )}
 
       <Select
         icon={<MdArrowDropDown />}
         name={name}
-        ref={customref && customref}
-        h={auth ? "54px" : "42px"}
-        borderRadius={auth ? "10px" : "7px"}
+        h="42px"
+        borderRadius="7px"
         borderColor="greyOne"
         bg="white"
         placeholder={placeholder ? placeholder : null}
         color={styled && "greyTwo"}
         textStyle={styled && "p2Regular"}
+        value={value && value}
+        index={index && index}
+        onChange={(e) => func(e.target.value, index)}
       >
         {data.map((item, index) => (
           <option
@@ -65,4 +51,4 @@ const CustomModalSelect = ({
   );
 };
 
-export default CustomModalSelect;
+export default WeeklySelect;

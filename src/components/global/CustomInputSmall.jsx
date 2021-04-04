@@ -14,7 +14,7 @@ const CustomInputSmall = ({ customref, ...props }) => {
       }}
       h="42px"
       px={4}
-      ref={customref}
+      ref={customref && customref}
       {...props}
     />
   );
