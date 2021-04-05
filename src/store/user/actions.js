@@ -8,10 +8,13 @@ import {
   USER_FORGOT_PASSWORD_REQUEST,
   USER_FORGOT_PASSWORD_SUCCESS,
   USER_FORGOT_PASSWORD_FAIL,
+  USER_FORGOT_PASSWORD_RESET,
+  USER_REGISTER_RESET,
 } from "./constants";
 import axios from "axios";
 import qs from "qs";
 import { createStandaloneToast } from "@chakra-ui/react";
+import capitalize from "../../utils/capitalize";
 
 export const userRegister = ({
   firstName: first_name,
@@ -28,6 +31,7 @@ export const userRegister = ({
     });
 
     const config = {
+      // withCredentials: true,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
       },
@@ -45,6 +49,7 @@ export const userRegister = ({
 
     const { data } = await axios.post(
       "https://splattai.com/mspstreamsampleregister.php",
+      // "http://localhost:8080/smtp/mspstreamsampleregister.php",
       transformed,
       config
     );
@@ -56,9 +61,27 @@ export const userRegister = ({
       payload: data.data,
     });
   } catch (err) {
+    const toast = createStandaloneToast();
+    // const customToast = createStandaloneToast({ theme: yourCustomTheme })
+    toast({
+      title: "Signup failed",
+      description:
+        err.response && err.response.data.message
+          ? capitalize(err.response.data.message)
+          : "Your request could not be completed. Please try again",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+      variant: "solid",
+    });
+
     dispatch({
       type: USER_REGISTER_FAIL,
-      payload: "Your request could not be completed. Please try again"
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : "Your request could not be completed. Please try again",
     });
   }
 };
@@ -70,6 +93,8 @@ export const userLogin = ({ email, password }) => async (dispatch) => {
     });
 
     const config = {
+      // withCredentials: true,
+      // credentials: "include",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
       },
@@ -82,20 +107,44 @@ export const userLogin = ({ email, password }) => async (dispatch) => {
 
     const { data } = await axios.post(
       "https://splattai.com/mspstreamsamplelogin.php",
+      // "http://localhost:8080/smtp/mspstreamsamplelogin.php",
       transformed,
       config
     );
 
     console.log(data);
 
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("smtpUser", JSON.stringify(data.data));
+    }
+
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data.data,
     });
   } catch (err) {
+    const toast = createStandaloneToast();
+    // const customToast = createStandaloneToast({ theme: yourCustomTheme })
+    toast({
+      title: "Login failed",
+      description:
+        err.response && err.response.data.message
+          ? capitalize(err.response.data.message)
+          : "Your request could not be completed. Please try again",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+      variant: "solid",
+    });
+
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload: "Your request could not be completed. Please try again",
+      // payload: "Your request could not be completed. Please try again",
+      payload:
+        err.response && err.response.data.message
+          ? capitalize(err.response.data.message)
+          : "Your request could not be completed. Please try again",
     });
   }
 };
@@ -107,6 +156,7 @@ export const userForgotPassword = ({ email }) => async (dispatch) => {
     });
 
     const config = {
+      // withCredentials: true,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
       },
@@ -118,17 +168,27 @@ export const userForgotPassword = ({ email }) => async (dispatch) => {
 
     const { data } = await axios.post(
       "https://splattai.com/mspstreamsampleforgpassword.php",
+      // "http://localhost:8080/smtp/mspstreamsampleforgpassword.php",
       transformed,
       config
     );
 
     // console.log(data);
+
+    dispatch({
+      type: USER_FORGOT_PASSWORD_SUCCESS,
+      payload: data.data.email,
+    });
+  } catch (err) {
     const toast = createStandaloneToast();
     // const customToast = createStandaloneToast({ theme: yourCustomTheme })
     toast({
-      title: "Password reset successful",
-      description: "A new password has been sent to the provided email",
-      status: "success",
+      title: "Request failed",
+      description:
+        err.response && err.response.data.message
+          ? capitalize(err.response.data.message)
+          : "Your request could not be completed. Please try again",
+      status: "error",
       duration: 5000,
       isClosable: true,
       position: "top",
@@ -136,12 +196,23 @@ export const userForgotPassword = ({ email }) => async (dispatch) => {
     });
 
     dispatch({
-      type: USER_FORGOT_PASSWORD_SUCCESS,
-    });
-  } catch (err) {
-    dispatch({
       type: USER_FORGOT_PASSWORD_FAIL,
-      payload: "Your request could not be completed. Please try again",
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : "Your request could not be completed. Please try again",
     });
   }
+};
+
+export const userForgotPasswordReset = () => async (dispatch) => {
+  dispatch({
+    type: USER_FORGOT_PASSWORD_RESET,
+  });
+};
+
+export const userRegisterReset = () => async (dispatch) => {
+  dispatch({
+    type: USER_REGISTER_RESET,
+  });
 };

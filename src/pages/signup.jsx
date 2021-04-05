@@ -51,7 +51,7 @@ const schema = yup.object().shape({
   timeZone: yup.string().required(),
 });
 
-const Signup = ({ user: { loading, user, error }, userRegister }) => {
+const Signup = ({ user: { loading }, userRegister }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -176,8 +176,6 @@ const Signup = ({ user: { loading, user, error }, userRegister }) => {
                 toggleValue={passwordShown}
               />
 
-              {error && <CustomAlert rad="10px" text={error} />}
-
               <CustomButton
                 isLoading={loading}
                 disabled={noErrors || !checkAgreed}
@@ -238,7 +236,7 @@ const Signup = ({ user: { loading, user, error }, userRegister }) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.userRegister,
 });
 
 export default connect(mapStateToProps, { userRegister })(EnsureGuest(Signup));

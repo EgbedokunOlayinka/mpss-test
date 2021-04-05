@@ -25,6 +25,8 @@ import styles from "../../styles/components/CustomInputBig.module.scss";
 import CustomModalButton from "../global/CustomModalButton";
 import CustomModalSelect from "../global/CustomModalSelect";
 import titles from "../../data/titles.json";
+import { connect, useSelector } from "react-redux";
+import { addCircle } from "../../store/circle/actions";
 
 const schema = yup.object().shape({
   circleName: yup.string().required(),
@@ -32,23 +34,32 @@ const schema = yup.object().shape({
   circleUsers: yup.string().required(),
   circleManager: yup.string().required(),
   asstCircleManager: yup.string().required(),
-  circleColor: yup.string().min(7).required(),
+  // circleColor: yup.string().min(7).required(),
 });
 
-const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
+const CreateNewCircle = ({ isOpen, onOpen, onClose, addCircle }) => {
   const [isSmallerThan481] = useMediaQuery("(max-width: 481px)");
   const [scrollBehavior, setScrollBehavior] = useState("inside");
 
-  const { register, handleSubmit, errors } = useForm({
+  const circleData = useSelector((state) => state.addCircle);
+  const { loading, error, data } = circleData;
+
+  const { register, handleSubmit, errors, reset } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (values) => {
     console.log(values);
-    alert(JSON.stringify(values));
-    onClose();
+    // alert(JSON.stringify(values));
+    addCircle(values);
+    // reset()
+    // onClose();
   };
+
+  // if (data) {
+  //   reset();
+  // }
 
   return (
     <Modal
@@ -89,13 +100,16 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
                   required={true}
                   errors={errors}
                 />
-                <CustomModalInput
+
+                <CustomModalSelect
                   name="circleUsers"
-                  title="Assign Users"
                   customref={register}
                   required={true}
                   errors={errors}
+                  data={titles}
                   placeholder="Please select users"
+                  styled={true}
+                  title="Assign Users"
                 />
 
                 <CustomModalSelect
@@ -119,7 +133,7 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
                   styled={true}
                   title="Assistant Circle Manager"
                 />
-                <FormControl
+                {/* <FormControl
                   isInvalid={!!errors?.circleColor?.message}
                   errortext={errors?.circleColor?.message}
                   isRequired
@@ -163,14 +177,18 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose }) => {
                       ref={register}
                     />
                   </HStack>
-                </FormControl>
+                </FormControl> */}
               </VStack>
 
               <Flex mt={8} align="center" justify="space-between">
                 <CustomModalButton onClick={() => onClose()} dark={false}>
                   Cancel
                 </CustomModalButton>
-                <CustomModalButton type="submit" dark={true}>
+                <CustomModalButton
+                  type="submit"
+                  dark={true}
+                  isLoading={loading}
+                >
                   Create
                 </CustomModalButton>
               </Flex>
@@ -186,4 +204,8 @@ const modalStyles = {
   boxShadow: "0px 6px 10px rgba(41, 60, 115, 0.17)",
 };
 
-export default CreateNewCircle;
+// const mapStateToProps = (state) => ({
+//   circle: state.addCircle,
+// });
+
+export default connect(null, { addCircle })(CreateNewCircle);

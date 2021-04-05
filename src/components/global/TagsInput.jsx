@@ -14,17 +14,8 @@ import CustomInputSmall from "./CustomInputSmall";
 import styles from "../../styles/components/CustomInputBig.module.scss";
 // import styles from "../../css/TagsInput.module.css";
 
-const TagsInput = () => {
-  const [tags, setTags] = useState([
-    // {
-    //   id: 1,
-    //   title: 'Project Management',
-    // },
-    // {
-    //   id: 2,
-    //   title: 'Excel',
-    // },
-  ]);
+const TagsInput = ({ setTotalTags }) => {
+  const [tags, setTags] = useState([]);
   const [tagValue, setTagValue] = useState("");
 
   const inputRef = useRef();
@@ -39,6 +30,7 @@ const TagsInput = () => {
 
       if (!tagExists) {
         setTags([...tags, { id: Math.random(), title: e.target.value }]);
+        setTotalTags([...tags, { id: Math.random(), title: e.target.value }]);
         e.target.value = "";
       }
 
@@ -52,11 +44,13 @@ const TagsInput = () => {
       const newTags = [...tags];
       newTags.pop();
       setTags(newTags);
+      setTotalTags(newTags);
     }
   };
 
   const removeTag = (id) => {
     setTags(tags.filter((tag) => tag.id !== id));
+    setTotalTags(tags.filter((tag) => tag.id !== id));
   };
 
   return (

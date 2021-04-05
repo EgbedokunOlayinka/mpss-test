@@ -8,7 +8,7 @@ import WeeklyTime from "./WeeklyTime";
 import { AddIcon, DeleteIcon, CloseIcon } from "@chakra-ui/icons";
 import WeeklySelect from "./WeeklySelect";
 
-const WeeklyEvents = () => {
+const WeeklyEvents = ({ setTotalEvents }) => {
   const [events, setEvents] = useState([]);
 
   const addEvent = () => {
@@ -23,6 +23,7 @@ const WeeklyEvents = () => {
     };
 
     setEvents((events) => [...events, newEvent]);
+    setTotalEvents((events) => [...events, newEvent]);
   };
 
   const removeEvent = (index) => {
@@ -31,10 +32,21 @@ const WeeklyEvents = () => {
       newArr.splice(index, 1);
       return newArr;
     });
+    setTotalEvents((events) => {
+      const newArr = [...events];
+      newArr.splice(index, 1);
+      return newArr;
+    });
   };
 
   const handleTitleChange = (val, index) => {
     setEvents((events) => {
+      let newArr = [...events];
+      newArr[index].title = val;
+
+      return newArr;
+    });
+    setTotalEvents((events) => {
       let newArr = [...events];
       newArr[index].title = val;
 
@@ -49,10 +61,22 @@ const WeeklyEvents = () => {
 
       return newArr;
     });
+    setTotalEvents((events) => {
+      let newArr = [...events];
+      newArr[index].description = val;
+
+      return newArr;
+    });
   };
 
   const handleDayChange = (val, index) => {
     setEvents((events) => {
+      let newArr = [...events];
+      newArr[index].day = val;
+
+      return newArr;
+    });
+    setTotalEvents((events) => {
       let newArr = [...events];
       newArr[index].day = val;
 
@@ -68,8 +92,18 @@ const WeeklyEvents = () => {
         newArr[index].openingHour = val;
         return newArr;
       });
+      setTotalEvents((events) => {
+        const newArr = [...events];
+        newArr[index].openingHour = val;
+        return newArr;
+      });
     } else if (tag === "closing") {
       setEvents((events) => {
+        const newArr = [...events];
+        newArr[index].closingHour = val;
+        return newArr;
+      });
+      setTotalEvents((events) => {
         const newArr = [...events];
         newArr[index].closingHour = val;
         return newArr;
@@ -85,8 +119,18 @@ const WeeklyEvents = () => {
         newArr[index].openingMinute = val;
         return newArr;
       });
+      setTotalEvents((events) => {
+        const newArr = [...events];
+        newArr[index].openingMinute = val;
+        return newArr;
+      });
     } else if (tag === "closing") {
       setEvents((events) => {
+        const newArr = [...events];
+        newArr[index].closingMinute = val;
+        return newArr;
+      });
+      setTotalEvents((events) => {
         const newArr = [...events];
         newArr[index].closingMinute = val;
         return newArr;
@@ -95,7 +139,7 @@ const WeeklyEvents = () => {
   };
 
   return (
-    <Box position="relative" pb={10}>
+    <Box position="relative" pb={events.length === 0 ? 0 : 10}>
       <Text color="veryDark" textStyle="p2Bold" mb={2}>
         Weekly Events
       </Text>
@@ -149,7 +193,7 @@ const WeeklyEvents = () => {
             />
 
             <IconButton
-              aria-label="Add Event"
+              aria-label="Remove Event"
               icon={<CloseIcon />}
               position="absolute"
               _hover={{ opacity: 0.85 }}

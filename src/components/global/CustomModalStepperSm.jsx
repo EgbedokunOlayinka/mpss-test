@@ -18,12 +18,27 @@ const CustomModalStepperSm = ({
   length,
   data,
   setDaysData,
+  setHours,
   hour,
   minute,
   tag,
 }) => {
   const handleChangeHour = (val) => {
     setDaysData((daysData) => {
+      let newArr = [...daysData];
+      newArr.forEach((item) => {
+        if (item.text === data.text) {
+          if (tag === "opening") {
+            item.openingHour = val;
+          } else if (tag === "closing") {
+            item.closingHour = val;
+          }
+        }
+      });
+
+      return newArr;
+    });
+    setHours((daysData) => {
       let newArr = [...daysData];
       newArr.forEach((item) => {
         if (item.text === data.text) {
@@ -54,6 +69,20 @@ const CustomModalStepperSm = ({
 
       return newArr;
     });
+    setHours((daysData) => {
+      let newArr = [...daysData];
+      newArr.forEach((item) => {
+        if (item.text === data.text) {
+          if (tag === "opening") {
+            item.openingMinute = val;
+          } else if (tag === "closing") {
+            item.closingMinute = val;
+          }
+        }
+      });
+
+      return newArr;
+    });
   };
 
   const minTwoDigits = (n) => {
@@ -66,7 +95,7 @@ const CustomModalStepperSm = ({
         h="full"
         min={min}
         max={hourMax}
-        value={minTwoDigits(hour)}
+        value={hour}
         onChange={(val) => handleChangeHour(val)}
       >
         <NumberInputField
@@ -103,7 +132,7 @@ const CustomModalStepperSm = ({
         h="full"
         min={min}
         max={minuteMax}
-        value={minTwoDigits(minute)}
+        value={minute}
         onChange={(val) => handleChangeMinute(val)}
       >
         <NumberInputField

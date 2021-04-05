@@ -5,18 +5,32 @@ import Loader from "../components/global/Loader";
 
 const EnsureGuest = (WrappedComponent) => {
   const RequiresGuest = (props) => {
-    const storedUser = useSelector((state) => state.user);
-    const { user } = storedUser;
+    const userLogin = useSelector((state) => state.userLogin);
+    const { user } = userLogin;
+
+    const userRegister = useSelector((state) => state.userRegister);
+    const { redirect: registerRedirect } = userRegister;
+
+    const userForgot = useSelector((state) => state.userForgot);
+    const { redirect: forgotRedirect } = userForgot;
 
     const router = useRouter();
 
     useEffect(() => {
       if (user) {
         router.push("/home");
+      } else if (registerRedirect) {
+        router.push("/registersuccess");
+      } else if (forgotRedirect) {
+        router.push("/passwordreset");
       }
-    }, [user]);
+    }, [user, registerRedirect, forgotRedirect]);
 
-    return user ? <Loader /> : <WrappedComponent {...props} />;
+    return user || forgotRedirect || registerRedirect ? (
+      <Loader />
+    ) : (
+      <WrappedComponent {...props} />
+    );
     // return user ? <h1>loading</h1> : <Loader />;
   };
 

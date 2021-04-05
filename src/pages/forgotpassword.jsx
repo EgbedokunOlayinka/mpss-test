@@ -28,10 +28,7 @@ const schema = yup.object().shape({
   email: yup.string().email().required(),
 });
 
-const ForgotPassword = ({
-  user: { forgotLoading, forgotSuccess, forgotError },
-  userForgotPassword,
-}) => {
+const ForgotPassword = ({ user: { loading }, userForgotPassword }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -101,10 +98,8 @@ const ForgotPassword = ({
                 errors={errors}
               />
 
-              {forgotError && <CustomAlert rad="10px" text={forgotError} />}
-
               <CustomButton
-                isLoading={forgotLoading}
+                isLoading={loading}
                 disabled={!!errors.email}
                 type="submit"
               >
@@ -137,7 +132,7 @@ const ForgotPassword = ({
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.userForgot,
 });
 
 export default connect(mapStateToProps, { userForgotPassword })(

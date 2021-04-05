@@ -35,7 +35,7 @@ const WeeklyCustomStepper = ({
         h="full"
         min={min}
         max={hourMax}
-        value={minTwoDigits(hour)}
+        value={hour}
         onChange={(val) => hourFunc(val, index, tag)}
       >
         <NumberInputField
@@ -72,7 +72,7 @@ const WeeklyCustomStepper = ({
         h="full"
         min={min}
         max={minuteMax}
-        value={minTwoDigits(minute)}
+        value={minute}
         onChange={(val) => minFunc(val, index, tag)}
       >
         <NumberInputField

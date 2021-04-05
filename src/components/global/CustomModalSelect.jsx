@@ -26,7 +26,7 @@ const CustomModalSelect = ({
           htmlFor={name}
           color="veryDark"
           textStyle="p2Bold"
-          mb={subtitle && 0}
+          mb={!subtitle && 2}
           pb={subtitle && 0}
         >
           {title}

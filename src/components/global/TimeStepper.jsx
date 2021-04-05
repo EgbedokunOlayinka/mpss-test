@@ -12,7 +12,7 @@ import {
 // import CustomModalStepper from "./CustomModalStepper";
 import CustomModalStepperSm from "./CustomModalStepperSm";
 
-const TimeStep = ({ data, setDaysData }) => {
+const TimeStep = ({ data, setDaysData, setHours }) => {
   return (
     <Grid templateColumns="1fr 1fr 1fr" gap={4} justify="center">
       <Flex align="center" w="full" h="full">
@@ -29,6 +29,7 @@ const TimeStep = ({ data, setDaysData }) => {
           length="32px"
           data={data}
           setDaysData={setDaysData}
+          setHours={setHours}
           hour={data.openingHour}
           minute={data.openingMinute}
           tag="opening"
@@ -43,6 +44,7 @@ const TimeStep = ({ data, setDaysData }) => {
           length="32px"
           data={data}
           setDaysData={setDaysData}
+          setHours={setHours}
           hour={data.closingHour}
           minute={data.closingMinute}
           tag="closing"
@@ -52,7 +54,7 @@ const TimeStep = ({ data, setDaysData }) => {
   );
 };
 
-const TimeStepper = () => {
+const TimeStepper = ({ setHours }) => {
   const daysArray = [
     {
       text: "Monday",
@@ -178,7 +180,12 @@ const TimeStepper = () => {
         </Grid>
         {daysData.map((item) => {
           return (
-            <TimeStep key={item.text} data={item} setDaysData={setDaysData} />
+            <TimeStep
+              key={item.text}
+              data={item}
+              setDaysData={setDaysData}
+              setHours={setHours}
+            />
           );
         })}
       </Grid>

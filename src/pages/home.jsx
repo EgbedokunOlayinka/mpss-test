@@ -4,13 +4,12 @@ import Header from "../components/header/Header";
 import HomeMenuOptions from "../components/home/HomeMenuOptions";
 import AddNewContact from "../components/modals/AddNewContact";
 import AddNewOrganization from "../components/modals/AddNewOrganization";
-import { useRef } from "react";
+import CreateNewCircle from "../components/modals/CreateNewCircle";
 
-import useEnsureUser from "../hooks/useEnsureUser";
+import { useSelector } from "react-redux";
 
 const Home = ({ sidebarOpen, setSidebarOpen }) => {
   // const user = useEnsureUser();
-  const initialRef = useRef();
 
   const {
     isOpen: isOpenContacts,
@@ -22,6 +21,12 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
     isOpen: isOpenOrganizations,
     onOpen: onOpenOrganizations,
     onClose: onCloseOrganizations,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenCircles,
+    onOpen: onOpenCircles,
+    onClose: onCloseCircles,
   } = useDisclosure();
 
   return (
@@ -36,7 +41,12 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
         isOpen={isOpenOrganizations}
         onOpen={onOpenOrganizations}
         onClose={onCloseOrganizations}
-        initialRef={initialRef}
+      />
+
+      <CreateNewCircle
+        isOpen={isOpenCircles}
+        onOpen={onOpenCircles}
+        onClose={onCloseCircles}
       />
 
       <Header
@@ -45,10 +55,11 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
         setSidebarOpen={setSidebarOpen}
       />
 
-      <Box position="absolute" right="0px" bottom="0px" ref={initialRef}>
+      <Box position="absolute" right="0px" bottom="0px">
         <HomeMenuOptions
           onOpenContacts={onOpenContacts}
           onOpenOrganizations={onOpenOrganizations}
+          onOpenCircles={onOpenCircles}
         />
       </Box>
 

@@ -25,6 +25,8 @@ import styles from "../../styles/components/CustomInputBig.module.scss";
 import spaceWord from "../../utils/spaceCamel";
 import CustomModalButton from "../global/CustomModalButton";
 import CustomModalPictureUpload from "../global/CustomModalPictureUpload";
+import { connect, useSelector } from "react-redux";
+import { addContact } from "../../store/contact/actions";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -36,7 +38,12 @@ const schema = yup.object().shape({
   profilePicture: yup.string(),
 });
 
-const AddNewContactOne = ({ onClose, setStage }) => {
+const AddNewContactOne = ({
+  onClose,
+  setStage,
+  addContact,
+  // contact: { loading, data, error },
+}) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -44,11 +51,19 @@ const AddNewContactOne = ({ onClose, setStage }) => {
 
   const onSubmit = (values) => {
     console.log(values);
-    alert(JSON.stringify(values));
+    // alert(JSON.stringify(values));
+    addContact(values);
     setStage((stage) => stage + 1);
   };
 
+  const contactData = useSelector((state) => state.addContact);
+  const { loading, error, data } = contactData;
+
   const [imageExists, setImageExists] = useState(false);
+
+  // if (data) {
+  //   setStage((stage) => stage + 1);
+  // }
 
   return (
     <>
@@ -140,7 +155,7 @@ const AddNewContactOne = ({ onClose, setStage }) => {
               </FormControl>
             </Box>
 
-            <Box w="full">
+            {/* <Box w="full">
               <FormControl>
                 <FormLabel
                   htmlFor="profilePicture"
@@ -151,14 +166,19 @@ const AddNewContactOne = ({ onClose, setStage }) => {
                 </FormLabel>
                 <CustomModalPictureUpload setImageExists={setImageExists} />
               </FormControl>
-            </Box>
+            </Box> */}
           </VStack>
 
           <HStack spacing={8} mt={8}>
             <CustomModalButton onClick={() => onClose()} dark={false}>
               Cancel
             </CustomModalButton>
-            <CustomModalButton type="submit" dark={true} full={true}>
+            <CustomModalButton
+              type="submit"
+              dark={true}
+              full={true}
+              isLoading={loading}
+            >
               Send Portal Access
             </CustomModalButton>
           </HStack>
@@ -168,4 +188,8 @@ const AddNewContactOne = ({ onClose, setStage }) => {
   );
 };
 
-export default AddNewContactOne;
+// const mapStateToProps = (state) => ({
+//   contact: state.addContact,
+// });
+
+export default connect(null, { addContact })(AddNewContactOne);

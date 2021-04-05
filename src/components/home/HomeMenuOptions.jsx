@@ -12,7 +12,11 @@ import OrganizationDropIcon from "../icons/OrganizationDropIcon";
 import CircleDropIcon from "../icons/CircleDropIcon";
 import ContactDropIcon from "../icons/ContactDropIcon";
 
-const HomeMenuOptions = ({ onOpenContacts, onOpenOrganizations }) => {
+const HomeMenuOptions = ({
+  onOpenContacts,
+  onOpenOrganizations,
+  onOpenCircles,
+}) => {
   return (
     <Menu>
       <MenuButton
@@ -52,7 +56,11 @@ const HomeMenuOptions = ({ onOpenContacts, onOpenOrganizations }) => {
             <Text ml={2}>Organizations</Text>
           </Flex>
         </MenuItem>
-        <MenuItem textStyle="p2Regular" color="veryDark">
+        <MenuItem
+          textStyle="p2Regular"
+          color="veryDark"
+          onClick={() => onOpenCircles()}
+        >
           <Flex>
             <Box mt="2px">
               <CircleDropIcon />

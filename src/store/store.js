@@ -2,7 +2,14 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import thunkMiddleware from "redux-thunk";
 import count from "./count/reducer";
-import user from "./user/reducer";
+import {
+  userForgotReducer,
+  userLoginReducer,
+  userRegisterReducer,
+} from "./user/reducer";
+import { addOrganizationReducer } from "./organization/reducer";
+import { addContactReducer } from "./contact/reducer";
+import { addCircleReducer } from "./circle/reducer";
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== "production") {
@@ -14,8 +21,26 @@ const bindMiddleware = (middleware) => {
 
 const combinedReducer = combineReducers({
   count,
-  user,
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  userForgot: userForgotReducer,
+  addOrganization: addOrganizationReducer,
+  addContact: addContactReducer,
+  addCircle: addCircleReducer,
 });
+
+let userInfoFromStorage;
+if (typeof window !== "undefined") {
+  userInfoFromStorage = localStorage.getItem("smtpUser")
+    ? JSON.parse(localStorage.getItem("smtpUser"))
+    : null;
+} else {
+  userInfoFromStorage = null;
+}
+
+const initialState = {
+  userLogin: { user: userInfoFromStorage },
+};
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {

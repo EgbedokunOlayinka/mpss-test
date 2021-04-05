@@ -29,7 +29,7 @@ const schema = yup.object().shape({
   password: yup.string().min(6).required(),
 });
 
-const Login = ({ user: { loading, user, error }, userLogin }) => {
+const Login = ({ user: { loading }, userLogin }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -100,8 +100,6 @@ const Login = ({ user: { loading, user, error }, userLogin }) => {
                 toggleValue={passwordShown}
               />
 
-              {error && <CustomAlert rad="10px" text={error} />}
-
               <CustomButton
                 isLoading={loading}
                 disabled={!!errors.email || !!errors.password}
@@ -150,7 +148,7 @@ const Login = ({ user: { loading, user, error }, userLogin }) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.userLogin,
 });
 
 export default connect(mapStateToProps, { userLogin })(EnsureGuest(Login));

@@ -34,6 +34,8 @@ import TimeStepper from "../global/TimeStepper";
 import CustomModalTextarea from "../global/CustomModalTextarea";
 import TagsInput from "../global/TagsInput";
 import WeeklyEvents from "../global/WeeklyEvents";
+import { connect } from "react-redux";
+import { addOrganization } from "../../store/organization/actions";
 
 const URL = /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
 
@@ -45,35 +47,47 @@ const schema = yup.object().shape({
   month: yup.string().required(),
   day: yup.string().required(),
   year: yup.string().required(),
-  logo: yup.string(),
+  // // logo: yup.string(),
   address: yup.string(),
-  skype: yup.string().required().matches(
-    // /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-    URL,
-    "Link not valid"
-  ),
+  sector: yup.string(),
+  skype: yup.string().required().matches(URL, "Link not valid"),
   backgroundInfo: yup.string(),
-  // tags: yup.string(),
-  // weeklyEvents: yup.string(),
+  // // tags: yup.string(),
+  // // weeklyEvents: yup.string(),
   contactName: yup.string().required(),
   contactEmail: yup.string().email().required(),
-  phoneCode: yup.string().required(),
+  contactPhoneCode: yup.string().required(),
   contactPhoneNumber: yup.number().required(),
 });
 
-const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
+const AddNewOrganization = ({
+  isOpen,
+  onOpen,
+  onClose,
+  addOrganization,
+  organization: { loading, error, data },
+}) => {
   const [isSmallerThan481] = useMediaQuery("(max-width: 481px)");
   const [scrollBehavior, setScrollBehavior] = useState("inside");
 
-  const { register, handleSubmit, errors } = useForm({
+  const [hours, setHours] = useState([]);
+  const [totalEvents, setTotalEvents] = useState([]);
+  const [totalTags, setTotalTags] = useState([]);
+
+  const { register, handleSubmit, errors, reset } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (values) => {
-    console.log(values);
-    alert(JSON.stringify(values));
-    onClose();
+    values.weeklyEvents = totalEvents;
+    values.openingHours = hours;
+    values.tags = totalTags;
+    // console.log(values);
+    // alert(JSON.stringify(values));
+    addOrganization(values);
+    // onClose();
+    // reset();
   };
 
   return (
@@ -83,7 +97,6 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
       isCentered
       size={isSmallerThan481 ? "xs" : "md"}
       scrollBehavior={scrollBehavior}
-      initialFocusRef={initialRef}
     >
       <ModalOverlay />
       <ModalContent
@@ -110,7 +123,6 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                   errors={errors}
                   subtitle="The official name of the company"
                 />
-
                 <CustomModalInput
                   name="email"
                   title="Email Address"
@@ -118,7 +130,6 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                   required={true}
                   errors={errors}
                 />
-
                 <Box>
                   <FormControl
                     isInvalid={!!errors?.phoneNumber?.message}
@@ -159,65 +170,72 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                     </FormErrorMessage>
                   </FormControl>
                 </Box>
-
                 <Box>
-                  {/* <FormControl>
-
-                  </FormControl> */}
-                  <Grid
-                    templateColumns="2fr 1.5fr 2fr"
-                    h="42px"
-                    w="full"
-                    gap="20px"
+                  <FormControl
+                  // isRequired={required ? "true" : "false"}
                   >
-                    <Box w="full" h="full">
-                      <CustomModalSelect
-                        name="month"
-                        customref={register}
-                        required={true}
-                        errors={errors}
-                        data={months}
-                        placeholder="Month"
-                        styled={true}
-                      />
-                    </Box>
-                    <Box w="full" h="full">
-                      <CustomModalStepper
-                        name="day"
-                        customref={register}
-                        placeholder="Day"
-                        min={1}
-                        max={31}
-                      />
-                    </Box>
-                    <Box w="full" h="full">
-                      <CustomModalStepper
-                        name="year"
-                        customref={register}
-                        placeholder="Year"
-                        min={1960}
-                        max={new Date().getFullYear()}
-                      />
-                    </Box>
-                  </Grid>
+                    <FormLabel color="veryDark" textStyle="p2Bold">
+                      Date of Incorporation
+                    </FormLabel>
+                    <Grid
+                      templateColumns="2fr 1.5fr 2fr"
+                      h="42px"
+                      w="full"
+                      gap="20px"
+                    >
+                      <Box w="full" h="full">
+                        <CustomModalSelect
+                          name="month"
+                          customref={register}
+                          required={true}
+                          errors={errors}
+                          data={months}
+                          placeholder="Month"
+                          styled={true}
+                        />
+                      </Box>
+                      <Box w="full" h="full">
+                        <CustomModalStepper
+                          name="day"
+                          customref={register}
+                          placeholder="Day"
+                          min={1}
+                          max={31}
+                        />
+                      </Box>
+                      <Box w="full" h="full">
+                        <CustomModalStepper
+                          name="year"
+                          customref={register}
+                          placeholder="Year"
+                          min={1960}
+                          max={new Date().getFullYear()}
+                        />
+                      </Box>
+                    </Grid>
+                  </FormControl>
                 </Box>
-
                 <CustomModalInput
                   name="address"
-                  title="Address"
+                  title=" Organization Address"
                   customref={register}
                   required={true}
                   errors={errors}
                 />
-
+                <CustomModalInput
+                  name="sector"
+                  title="Organization Sector"
+                  customref={register}
+                  required={true}
+                  errors={errors}
+                />
                 <CustomModalInput
                   name="skype"
-                  title="Skype Link"
+                  title="Organization Skype Link"
                   customref={register}
                   required={true}
                   errors={errors}
                 />
-
                 <CustomModalTextarea
                   name="backgroundInfo"
                   title="Background Info"
@@ -225,7 +243,6 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                   required={true}
                   errors={errors}
                 />
-
                 <FormControl
                   isInvalid={!!errors?.tags?.message}
                   errortext={errors?.tags?.message}
@@ -241,7 +258,7 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                   <Text color="greyTwo" textStyle="p3Regular" mb={2}>
                     Add tags that describe the organization
                   </Text>
-                  <TagsInput />
+                  <TagsInput setTotalTags={setTotalTags} />
                   <FormErrorMessage textStyle="p2Bold">
                     <Icon as={MdErrorOutline} mr={1} />
                     <Text className={styles.error}>
@@ -251,11 +268,9 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                     </Text>
                   </FormErrorMessage>
                 </FormControl>
-
                 <Box w="full">
-                  <TimeStepper />
+                  <TimeStepper setHours={setHours} />
                 </Box>
-
                 <Box w="full">
                   <FormControl>
                     <FormLabel
@@ -273,11 +288,9 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                     <CustomModalCompanyImageUpload />
                   </FormControl>
                 </Box>
-
                 <Box w="full">
-                  <WeeklyEvents />
+                  <WeeklyEvents setTotalEvents={setTotalEvents} />
                 </Box>
-
                 <CustomModalInput
                   name="contactName"
                   title="Contact Name"
@@ -285,15 +298,13 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                   required={true}
                   errors={errors}
                 />
-
                 <CustomModalInput
-                  name="contactOrganization"
-                  title="Contact Organization"
+                  name="contactEmail"
+                  title="Contact Email"
                   customref={register}
                   required={true}
                   errors={errors}
                 />
-
                 <Box>
                   <FormControl
                     isInvalid={!!errors?.contactPhoneNumber?.message}
@@ -305,7 +316,7 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                       color="veryDark"
                       textStyle="p2Bold"
                     >
-                      Conact Phone Number
+                      Contact Phone Number
                     </FormLabel>
 
                     <Grid gap={4} templateColumns="2.5fr 7.5fr" w="full">
@@ -333,14 +344,20 @@ const AddNewOrganization = ({ isOpen, onOpen, onClose, initialRef }) => {
                       </Text>
                     </FormErrorMessage>
                   </FormControl>
-                </Box>
+                </Box>{" "}
+                */}
               </VStack>
 
               <HStack spacing={8} mt={8}>
                 <CustomModalButton onClick={() => onClose()} dark={false}>
                   Cancel
                 </CustomModalButton>
-                <CustomModalButton type="submit" dark={true} full={true}>
+                <CustomModalButton
+                  isLoading={loading}
+                  type="submit"
+                  dark={true}
+                  full={true}
+                >
                   Add New Organization
                 </CustomModalButton>
               </HStack>
@@ -356,4 +373,12 @@ const modalStyles = {
   boxShadow: "0px 6px 10px rgba(41, 60, 115, 0.17)",
 };
 
-export default AddNewOrganization;
+const mapStateToProps = (state) => ({
+  organization: state.addOrganization,
+});
+
+export default connect(mapStateToProps, { addOrganization })(
+  AddNewOrganization
+);
+
+// export default AddNewOrganization;

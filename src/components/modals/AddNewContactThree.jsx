@@ -8,6 +8,8 @@ import contacts from "../../data/contacts.json";
 import organizations from "../../data/organizations.json";
 import circles from "../../data/circles.json";
 import CustomModalButton from "../global/CustomModalButton";
+import { connect, useSelector } from "react-redux";
+import { addContactSecond } from "../../store/contact/actions";
 
 const schema = yup.object().shape({
   organization: yup.string().required(),
@@ -15,17 +17,21 @@ const schema = yup.object().shape({
   circle: yup.string().required(),
 });
 
-const AddNewContactThree = ({ onClose, setStage }) => {
+const AddNewContactThree = ({ onClose, setStage, addContactSecond }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
 
+  const contactData = useSelector((state) => state.addContact);
+  const { loading, error, data } = contactData;
+
   const onSubmit = (values) => {
     console.log(values);
-    alert(JSON.stringify(values));
+    // alert(JSON.stringify(values));
     // setStage((stage) => stage + 1);
-    onClose();
+    addContactSecond(values);
+    // onClose();
   };
 
   return (
@@ -72,7 +78,7 @@ const AddNewContactThree = ({ onClose, setStage }) => {
           <CustomModalButton onClick={() => onClose()} dark={false}>
             Cancel
           </CustomModalButton>
-          <CustomModalButton type="submit" dark={true}>
+          <CustomModalButton isLoading={loading} type="submit" dark={true}>
             Create
           </CustomModalButton>
         </Flex>
@@ -81,4 +87,4 @@ const AddNewContactThree = ({ onClose, setStage }) => {
   );
 };
 
-export default AddNewContactThree;
+export default connect(null, { addContactSecond })(AddNewContactThree);
