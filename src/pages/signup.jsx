@@ -192,7 +192,7 @@ const Signup = ({ user: { loading }, userRegister }) => {
             <Box
               w={4}
               h={4}
-              border="0.5px solid #293c73"
+              border="0.5px solid #27459C"
               borderRadius="3px"
               position="relative"
               onClick={() => setCheckAgreed((value) => setCheckAgreed(!value))}

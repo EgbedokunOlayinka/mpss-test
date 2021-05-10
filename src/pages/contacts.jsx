@@ -21,7 +21,7 @@ const Contacts = ({ sidebarOpen, setSidebarOpen }) => {
   };
 
   return (
-    <Box position="relative" h="100%">
+    <Box position="relative" h="100%" px={6}>
       <InnerPageHeader
         title="Contacts"
         sidebarOpen={sidebarOpen}

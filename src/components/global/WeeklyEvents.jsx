@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, VStack, Box, IconButton } from "@chakra-ui/react";
 import WeeklyInput from "./WeeklyInput";
 import CustomModalSelect from "./CustomModalSelect";
@@ -8,7 +8,12 @@ import WeeklyTime from "./WeeklyTime";
 import { AddIcon, DeleteIcon, CloseIcon } from "@chakra-ui/icons";
 import WeeklySelect from "./WeeklySelect";
 
-const WeeklyEvents = ({ setTotalEvents }) => {
+const WeeklyEvents = ({
+  setTotalEvents,
+  getEvents,
+  toSubmitEvents,
+  setToSubmitEvents,
+}) => {
   const [events, setEvents] = useState([]);
 
   const addEvent = () => {
@@ -21,9 +26,7 @@ const WeeklyEvents = ({ setTotalEvents }) => {
       closingHour: 0,
       closingMinute: 0,
     };
-
     setEvents((events) => [...events, newEvent]);
-    setTotalEvents((events) => [...events, newEvent]);
   };
 
   const removeEvent = (index) => {
@@ -32,21 +35,10 @@ const WeeklyEvents = ({ setTotalEvents }) => {
       newArr.splice(index, 1);
       return newArr;
     });
-    setTotalEvents((events) => {
-      const newArr = [...events];
-      newArr.splice(index, 1);
-      return newArr;
-    });
   };
 
   const handleTitleChange = (val, index) => {
     setEvents((events) => {
-      let newArr = [...events];
-      newArr[index].title = val;
-
-      return newArr;
-    });
-    setTotalEvents((events) => {
       let newArr = [...events];
       newArr[index].title = val;
 
@@ -61,12 +53,6 @@ const WeeklyEvents = ({ setTotalEvents }) => {
 
       return newArr;
     });
-    setTotalEvents((events) => {
-      let newArr = [...events];
-      newArr[index].description = val;
-
-      return newArr;
-    });
   };
 
   const handleDayChange = (val, index) => {
@@ -76,34 +62,17 @@ const WeeklyEvents = ({ setTotalEvents }) => {
 
       return newArr;
     });
-    setTotalEvents((events) => {
-      let newArr = [...events];
-      newArr[index].day = val;
-
-      return newArr;
-    });
   };
 
   const handleHourChange = (val, index, tag) => {
-    // console.log({ val, index, tag });
     if (tag === "opening") {
       setEvents((events) => {
         const newArr = [...events];
         newArr[index].openingHour = val;
         return newArr;
       });
-      setTotalEvents((events) => {
-        const newArr = [...events];
-        newArr[index].openingHour = val;
-        return newArr;
-      });
     } else if (tag === "closing") {
       setEvents((events) => {
-        const newArr = [...events];
-        newArr[index].closingHour = val;
-        return newArr;
-      });
-      setTotalEvents((events) => {
         const newArr = [...events];
         newArr[index].closingHour = val;
         return newArr;
@@ -112,14 +81,8 @@ const WeeklyEvents = ({ setTotalEvents }) => {
   };
 
   const handleMinuteChange = (val, index, tag) => {
-    // console.log({ val, index, tag });
     if (tag === "opening") {
       setEvents((events) => {
-        const newArr = [...events];
-        newArr[index].openingMinute = val;
-        return newArr;
-      });
-      setTotalEvents((events) => {
         const newArr = [...events];
         newArr[index].openingMinute = val;
         return newArr;
@@ -130,13 +93,16 @@ const WeeklyEvents = ({ setTotalEvents }) => {
         newArr[index].closingMinute = val;
         return newArr;
       });
-      setTotalEvents((events) => {
-        const newArr = [...events];
-        newArr[index].closingMinute = val;
-        return newArr;
-      });
     }
   };
+
+  if (toSubmitEvents) {
+    getEvents(events);
+  }
+
+  useEffect(() => {
+    setToSubmitEvents(false);
+  }, []);
 
   return (
     <Box position="relative" pb={events.length === 0 ? 0 : 10}>

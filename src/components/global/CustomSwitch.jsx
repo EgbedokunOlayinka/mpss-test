@@ -19,7 +19,7 @@ const CustomSwitch = ({ value, setValue }) => {
       h="25px"
       bg="white"
       borderWidth="0.5px"
-      borderColor="customDark"
+      borderColor={value ? "customDark" : "greyTwo"}
       borderRadius="12px"
       p="2px"
       onClick={() => setValue(!value)}
@@ -30,7 +30,7 @@ const CustomSwitch = ({ value, setValue }) => {
         initial={{ x: 0 }}
         animate={value ? "left" : "right"}
         transition={{ type: "tween", ease: "easeInOut", duration: 0.2 }}
-        bg="customDark"
+        bg={value ? "customDark" : "greyTwo"}
         borderRadius="full"
         w="20px"
         h="100%"

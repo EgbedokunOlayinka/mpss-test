@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Loader from "../global/Loader";
 import dynamic from "next/dynamic";
+import { connect } from "react-redux";
+import { userVerify, userLastLink } from "../../store/user/actions";
 
 const InnerPageLeft = dynamic(() => import("./InnerPageLeft"), { ssr: false });
 const InnerPageRight = dynamic(() => import("./InnerPageRight"), {
@@ -15,22 +17,27 @@ const InnerPageRight = dynamic(() => import("./InnerPageRight"), {
 });
 const MobileNav = dynamic(() => import("./MobileNav"), { ssr: false });
 
-const InnerPageLayout = ({ children }) => {
+const InnerPageLayout = ({ children, userVerify }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isSmallerThan768] = useMediaQuery("(max-width: 767px)");
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { user } = userLogin;
+  const { user, loading } = userLogin;
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    // console.log("innerpagelayout");
+    // console.log({ user, loading });
+    if (!user && !loading) {
+      // console.log("pushing to login");
+      // console.log({ user, loading });
       router.push("/login");
+      // console.log(123);
     }
-  }, [user]);
+  }, [user, loading]);
 
-  return !user ? (
+  return !user || loading ? (
     <Loader />
   ) : (
     <Div100vh>
@@ -83,4 +90,5 @@ const InnerPageLayout = ({ children }) => {
   // );
 };
 
-export default InnerPageLayout;
+export default connect(null, { userVerify, userLastLink })(InnerPageLayout);
+// export default InnerPageLayout;

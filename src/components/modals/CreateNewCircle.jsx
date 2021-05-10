@@ -72,12 +72,12 @@ const CreateNewCircle = ({ isOpen, onOpen, onClose, addCircle }) => {
       <ModalOverlay />
       <ModalContent
         bg="white"
-        border="0.5px solid #293c73"
+        border="0.5px solid #27459C"
         borderRadius="20px"
         style={modalStyles}
       >
         <ModalBody px={0}>
-          <Box py={6} borderBottom="0.5px solid #293c73">
+          <Box py={6} borderBottom="0.5px solid #27459C">
             <Text color="customDark" textStyle="h4" align="center">
               Create New Circle
             </Text>

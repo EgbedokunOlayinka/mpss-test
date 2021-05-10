@@ -1,0 +1,28 @@
+.area {
+  background-attachment: local;
+  background-image: linear-gradient(to right, white 0px, transparent 0px),
+    linear-gradient(to left, white 0px, transparent 0px),
+    repeating-linear-gradient(
+      white,
+      white 30px,
+      #d5d9e3 30px,
+      #d5d9e3 31px,
+      white 31px
+    );
+  line-height: 31px;
+  padding: 0px 0px;
+  width: 100%;
+  resize: none;
+  color: black;
+}
+
+.area:focus {
+  border: 0 none #fff;
+  overflow: hidden;
+  outline: none;
+}
+
+.area::placeholder {
+  color: #7a7e89;
+  font-size: 15px;
+}

@@ -36,6 +36,7 @@ import TagsInput from "../global/TagsInput";
 import WeeklyEvents from "../global/WeeklyEvents";
 import { connect } from "react-redux";
 import { addOrganization } from "../../store/organization/actions";
+import { useEffect } from "react";
 
 const URL = /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
 
@@ -43,7 +44,10 @@ const schema = yup.object().shape({
   organizationName: yup.string().required(),
   email: yup.string().email().required(),
   phoneCode: yup.string().required(),
-  phoneNumber: yup.number().required(),
+  phoneNumber: yup
+    .number()
+    .typeError("Input must be a valid number")
+    .required(),
   month: yup.string().required(),
   day: yup.string().required(),
   year: yup.string().required(),
@@ -52,12 +56,10 @@ const schema = yup.object().shape({
   sector: yup.string(),
   skype: yup.string().required().matches(URL, "Link not valid"),
   backgroundInfo: yup.string(),
-  // // tags: yup.string(),
-  // // weeklyEvents: yup.string(),
-  contactName: yup.string().required(),
+  // contactName: yup.string().required(),
   contactEmail: yup.string().email().required(),
-  contactPhoneCode: yup.string().required(),
-  contactPhoneNumber: yup.number().required(),
+  // contactPhoneCode: yup.string().required(),
+  // contactPhoneNumber: yup.number().required(),
 });
 
 const AddNewOrganization = ({
@@ -65,14 +67,69 @@ const AddNewOrganization = ({
   onOpen,
   onClose,
   addOrganization,
-  organization: { loading, error, data },
+  organization: { loading, error, success },
 }) => {
   const [isSmallerThan481] = useMediaQuery("(max-width: 481px)");
   const [scrollBehavior, setScrollBehavior] = useState("inside");
 
-  const [hours, setHours] = useState([]);
+  const daysArray = [
+    {
+      text: "Monday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Tuesday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Wednesday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Thursday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Friday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Saturday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+    {
+      text: "Sunday",
+      openingHour: 0,
+      openingMinute: 0,
+      closingHour: 0,
+      closingMinute: 0,
+    },
+  ];
+
+  const [hours, setHours] = useState([...daysArray]);
   const [totalEvents, setTotalEvents] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
+
+  const [toSubmitEvents, setToSubmitEvents] = useState(false);
+  const [toSubmitHours, setToSubmitHours] = useState(false);
 
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onTouched",
@@ -80,15 +137,43 @@ const AddNewOrganization = ({
   });
 
   const onSubmit = (values) => {
-    values.weeklyEvents = totalEvents;
-    values.openingHours = hours;
+    // values.weeklyEvents = totalEvents;
+    values.weeklyEvents = submitEvents();
+    // values.openingHours = hours;
+    values.openingHours = submitHours();
     values.tags = totalTags;
     // console.log(values);
     // alert(JSON.stringify(values));
     addOrganization(values);
-    // onClose();
-    // reset();
   };
+
+  const submitEvents = () => {
+    setToSubmitEvents(true);
+  };
+
+  const getEvents = (arr) => {
+    console.log(arr);
+    return arr;
+  };
+
+  const submitHours = () => {
+    setToSubmitHours(true);
+  };
+
+  const getHours = (arr) => {
+    console.log(arr);
+    return arr;
+  };
+
+  useEffect(() => {
+    if (success) {
+      onClose();
+      reset();
+      setHours([...daysArray]);
+      setTotalEvents([]);
+      setTotalTags([]);
+    }
+  }, [success]);
 
   return (
     <Modal
@@ -101,12 +186,12 @@ const AddNewOrganization = ({
       <ModalOverlay />
       <ModalContent
         bg="white"
-        border="0.5px solid #293c73"
+        border="0.5px solid #27459C"
         borderRadius="20px"
         style={modalStyles}
       >
         <ModalBody px={0}>
-          <Box py={6} borderBottom="0.5px solid #293c73">
+          <Box py={6} borderBottom="0.5px solid #27459C">
             <Text color="customDark" textStyle="h4" align="center">
               Add New Organization
             </Text>
@@ -208,7 +293,7 @@ const AddNewOrganization = ({
                           name="year"
                           customref={register}
                           placeholder="Year"
-                          min={1960}
+                          min={1970}
                           max={new Date().getFullYear()}
                         />
                       </Box>
@@ -269,7 +354,12 @@ const AddNewOrganization = ({
                   </FormErrorMessage>
                 </FormControl>
                 <Box w="full">
-                  <TimeStepper setHours={setHours} />
+                  <TimeStepper
+                    setHours={setHours}
+                    getHours={getHours}
+                    toSubmitHours={toSubmitHours}
+                    setToSubmitHours={setToSubmitHours}
+                  />
                 </Box>
                 <Box w="full">
                   <FormControl>
@@ -289,15 +379,20 @@ const AddNewOrganization = ({
                   </FormControl>
                 </Box>
                 <Box w="full">
-                  <WeeklyEvents setTotalEvents={setTotalEvents} />
+                  <WeeklyEvents
+                    setTotalEvents={setTotalEvents}
+                    getEvents={getEvents}
+                    toSubmitEvents={toSubmitEvents}
+                    setToSubmitEvents={setToSubmitEvents}
+                  />
                 </Box>
-                <CustomModalInput
+                {/* <CustomModalInput
                   name="contactName"
                   title="Contact Name"
                   customref={register}
                   required={true}
                   errors={errors}
-                />
+                /> */}
                 <CustomModalInput
                   name="contactEmail"
                   title="Contact Email"
@@ -305,7 +400,7 @@ const AddNewOrganization = ({
                   required={true}
                   errors={errors}
                 />
-                <Box>
+                {/* <Box>
                   <FormControl
                     isInvalid={!!errors?.contactPhoneNumber?.message}
                     errortext={errors?.contactPhoneNumber?.message}
@@ -344,8 +439,7 @@ const AddNewOrganization = ({
                       </Text>
                     </FormErrorMessage>
                   </FormControl>
-                </Box>{" "}
-                */}
+                </Box>{" "} */}
               </VStack>
 
               <HStack spacing={8} mt={8}>

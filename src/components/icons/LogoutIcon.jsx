@@ -9,19 +9,19 @@ const LogoutIcon = ({ active }) => {
     >
       <path
         d="M2.6665 8H9.99984"
-        stroke={active ? "#293c73" : "white"}
+        stroke={active ? "#27459C" : "white"}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M5.33333 4.66663L2 7.99996L5.33333 11.3333"
-        stroke={active ? "#293c73" : "white"}
+        stroke={active ? "#27459C" : "white"}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M14 2V14"
-        stroke={active ? "#293c73" : "white"}
+        stroke={active ? "#27459C" : "white"}
         strokeLinecap="round"
         strokeLinejoin="round"
       />

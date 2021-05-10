@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FormLabel,
   FormControl,
@@ -54,58 +54,12 @@ const TimeStep = ({ data, setDaysData, setHours }) => {
   );
 };
 
-const TimeStepper = ({ setHours }) => {
-  const daysArray = [
-    {
-      text: "Monday",
-      openingHour: 0,
-      openingMinute: 0,
-      closingHour: 0,
-      closingMinute: 0,
-    },
-    {
-      text: "Tuesday",
-      openingHour: 0,
-      openingMinute: 0,
-      closingHour: 0,
-      closingMinute: 0,
-    },
-    {
-      text: "Wednesday",
-      openingHour: 0,
-      openingMinute: 0,
-      closingHour: 0,
-      closingMinute: 0,
-    },
-    {
-      text: "Thursday",
-      openingHour: 0,
-      openingMinute: 0,
-      closingHour: 0,
-      closingMinute: 0,
-    },
-    {
-      text: "Friday",
-      openingHour: 0,
-      openingMinute: 0,
-      closingHour: 0,
-      closingMinute: 0,
-    },
-    {
-      text: "Saturday",
-      openingHour: 0,
-      openingMinute: 0,
-      closingHour: 0,
-      closingMinute: 0,
-    },
-    {
-      text: "Sunday",
-      openingHour: 0,
-      openingMinute: 0,
-      closingHour: 0,
-      closingMinute: 0,
-    },
-  ];
+const TimeStepper = ({
+  setHours,
+  getHours,
+  toSubmitHours,
+  setToSubmitHours,
+}) => {
   const [daysData, setDaysData] = useState([
     {
       text: "Monday",
@@ -157,6 +111,14 @@ const TimeStepper = ({ setHours }) => {
       closingMinute: 0,
     },
   ]);
+
+  if (toSubmitHours) {
+    getHours(daysData);
+  }
+
+  useEffect(() => {
+    setToSubmitHours(false);
+  }, []);
 
   return (
     <FormControl>

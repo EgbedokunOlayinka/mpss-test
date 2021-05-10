@@ -29,7 +29,7 @@ const schema = yup.object().shape({
   password: yup.string().min(6).required(),
 });
 
-const Login = ({ user: { loading }, userLogin }) => {
+const Login = ({ user: { loading, loginLoading }, userLogin }) => {
   const { register, handleSubmit, errors } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -101,7 +101,7 @@ const Login = ({ user: { loading }, userLogin }) => {
               />
 
               <CustomButton
-                isLoading={loading}
+                isLoading={loginLoading}
                 disabled={!!errors.email || !!errors.password}
                 type="submit"
               >

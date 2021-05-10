@@ -7,7 +7,7 @@ const InnerPageRight = ({ children, sidebarOpen, setSidebarOpen }) => {
   return (
     <Box
       py={[8, 10]}
-      px={6}
+      // px={6}
       onClick={() => isSmallerThan768 && sidebarOpen && setSidebarOpen(false)}
       h="full"
       ml={[0, null, "213px"]}

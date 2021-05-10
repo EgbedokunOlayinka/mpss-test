@@ -6,8 +6,12 @@ import {
   userForgotReducer,
   userLoginReducer,
   userRegisterReducer,
+  userLinkReducer,
 } from "./user/reducer";
-import { addOrganizationReducer } from "./organization/reducer";
+import {
+  addOrganizationReducer,
+  getOrganizationsReducer,
+} from "./organization/reducer";
 import { addContactReducer } from "./contact/reducer";
 import { addCircleReducer } from "./circle/reducer";
 
@@ -24,23 +28,12 @@ const combinedReducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userForgot: userForgotReducer,
+  userLink: userLinkReducer,
   addOrganization: addOrganizationReducer,
+  getOrganizations: getOrganizationsReducer,
   addContact: addContactReducer,
   addCircle: addCircleReducer,
 });
-
-let userInfoFromStorage;
-if (typeof window !== "undefined") {
-  userInfoFromStorage = localStorage.getItem("smtpUser")
-    ? JSON.parse(localStorage.getItem("smtpUser"))
-    : null;
-} else {
-  userInfoFromStorage = null;
-}
-
-const initialState = {
-  userLogin: { user: userInfoFromStorage },
-};
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {

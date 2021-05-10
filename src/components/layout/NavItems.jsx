@@ -18,8 +18,10 @@ import CirclesIcon from "../icons/CirclesIcon";
 import SettingsIcon from "../icons/SettingsIcon";
 import { BiCaretDown } from "react-icons/bi";
 import CustomLink from "../global/CustomLink";
+import { connect } from "react-redux";
+import { userLogout } from "../../store/user/actions";
 
-const NavItems = ({ setSidebarOpen, sidebarOpen }) => {
+const NavItems = ({ setSidebarOpen, sidebarOpen, userLogout }) => {
   return (
     <Flex
       direction="column"
@@ -98,6 +100,8 @@ const NavItems = ({ setSidebarOpen, sidebarOpen }) => {
           text="Log Out"
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
+          btn={true}
+          func={userLogout}
         >
           <LogoutIcon />
         </CustomLink>
@@ -106,4 +110,4 @@ const NavItems = ({ setSidebarOpen, sidebarOpen }) => {
   );
 };
 
-export default NavItems;
+export default connect(null, { userLogout })(NavItems);

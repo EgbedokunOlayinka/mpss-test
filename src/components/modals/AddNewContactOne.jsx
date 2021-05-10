@@ -67,7 +67,7 @@ const AddNewContactOne = ({
 
   return (
     <>
-      <Box py={6} borderBottom="0.5px solid #293c73">
+      <Box py={6} borderBottom="0.5px solid #27459C">
         <Text color="customDark" textStyle="h4" align="center">
           Add a Contact
         </Text>

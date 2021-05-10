@@ -10,6 +10,11 @@ import {
   USER_FORGOT_PASSWORD_SUCCESS,
   USER_FORGOT_PASSWORD_RESET,
   USER_REGISTER_RESET,
+  USER_VERIFY_REQUEST,
+  USER_VERIFY_SUCCESS,
+  USER_VERIFY_FAIL,
+  USER_LOGOUT,
+  USER_LAST_LINK,
 } from "./constants";
 
 // const initialState = {
@@ -26,6 +31,7 @@ const loginInitialState = {
   loading: false,
   user: null,
   error: null,
+  loginLoading: false,
 };
 
 const registerInitialState = {
@@ -41,6 +47,24 @@ const forgotInitialState = {
   error: null,
 };
 
+const linkInitialState = {
+  lastLink: null,
+};
+
+export const userLinkReducer = (
+  state = linkInitialState,
+  { type, payload }
+) => {
+  switch (type) {
+    case USER_LAST_LINK:
+      return {
+        lastLink: payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export const userLoginReducer = (
   state = loginInitialState,
   { type, payload }
@@ -51,8 +75,22 @@ export const userLoginReducer = (
         loading: true,
         user: null,
         error: null,
+        loginLoading: true,
+      };
+    case USER_VERIFY_REQUEST:
+      return {
+        loading: true,
+        user: null,
+        error: null,
       };
     case USER_LOGIN_SUCCESS:
+      return {
+        loading: false,
+        user: payload,
+        error: null,
+        loginLoading: false,
+      };
+    case USER_VERIFY_SUCCESS:
       return {
         loading: false,
         user: payload,
@@ -63,6 +101,20 @@ export const userLoginReducer = (
         loading: false,
         user: null,
         error: payload,
+        loginLoading: false,
+      };
+    case USER_VERIFY_FAIL:
+      return {
+        loading: false,
+        user: null,
+        error: null,
+      };
+    case USER_LOGOUT:
+      return {
+        loading: false,
+        user: null,
+        error: null,
+        loginLoading: false,
       };
     default:
       return state;
@@ -131,80 +183,3 @@ export const userForgotReducer = (
       return state;
   }
 };
-
-// const userReducer = (state = initialState, { type, payload }) => {
-//   switch (type) {
-//     case USER_REGISTER_REQUEST:
-//       return {
-//         ...state,
-//         redirect: false,
-//         loading: true,
-//         error: null,
-//       };
-//     case USER_REGISTER_SUCCESS:
-//       return {
-//         ...state,
-//         loading: false,
-//         redirect: true,
-//         error: null,
-//       };
-//     case USER_REGISTER_FAIL:
-//       return {
-//         ...state,
-//         loading: false,
-//         error: payload,
-//         redirect: false,
-//       };
-//     case USER_LOGIN_REQUEST:
-//       return {
-//         ...state,
-//         loading: true,
-//         error: null,
-//         redirect: false,
-//       };
-//     case USER_LOGIN_SUCCESS:
-//       return {
-//         ...state,
-//         loading: false,
-//         user: payload,
-//         error: null,
-//         redirect: false,
-//       };
-//     case USER_LOGIN_FAIL:
-//       return {
-//         ...state,
-//         loading: false,
-//         user: null,
-//         error: payload,
-//         redirect: false,
-//       };
-//     case USER_FORGOT_PASSWORD_REQUEST:
-//       return {
-//         ...state,
-//         forgotLoading: true,
-//         forgotSuccess: false,
-//         forgotError: null,
-//         redirect: false,
-//       };
-//     case USER_FORGOT_PASSWORD_SUCCESS:
-//       return {
-//         ...state,
-//         forgotLoading: false,
-//         forgotSuccess: true,
-//         forgotError: null,
-//         redirect: false,
-//       };
-//     case USER_FORGOT_PASSWORD_FAIL:
-//       return {
-//         ...state,
-//         forgotLoading: false,
-//         forgotSuccess: false,
-//         forgotError: payload,
-//         redirect: false,
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
-// export default userReducer;

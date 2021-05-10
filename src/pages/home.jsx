@@ -30,7 +30,7 @@ const Home = ({ sidebarOpen, setSidebarOpen }) => {
   } = useDisclosure();
 
   return (
-    <Box position="relative" h="100%">
+    <Box position="relative" h="100%" px={6}>
       <AddNewContact
         isOpen={isOpenContacts}
         onOpen={onOpenContacts}

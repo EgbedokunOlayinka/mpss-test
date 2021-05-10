@@ -4,19 +4,23 @@ import styles from "../styles/pages/Login.module.scss";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Loader from "../components/global/Loader";
+import { connect, useSelector } from "react-redux";
+import { userVerify } from "../store/user/actions";
 
-const Index = () => {
+const Index = ({ userVerify }) => {
   const router = useRouter();
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { user, loading } = userLogin;
+
   useEffect(() => {
-    router.push('/login');
-  }, [router]);
+    // console.log("index");
+    if (!user && !loading) {
+      router.push("/login");
+    }
+  }, [router, user, loading]);
 
-  return (
-    <Loader />
-  )
-
-
+  return <Loader />;
 
   // return (
   //   <Center w="full" h="100vh" className={styles.pageBG} px={[4, null]}>
@@ -81,4 +85,5 @@ const Index = () => {
   // );
 };
 
-export default Index;
+export default connect(null, { userVerify })(Index);
+// export default Index;

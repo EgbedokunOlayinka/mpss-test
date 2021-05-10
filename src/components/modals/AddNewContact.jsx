@@ -35,7 +35,7 @@ const AddNewContact = ({ isOpen, onOpen, onClose }) => {
       <ModalOverlay />
       <ModalContent
         bg="white"
-        border="0.5px solid #293c73"
+        border="0.5px solid #27459C"
         borderRadius="20px"
         style={modalStyles}
       >

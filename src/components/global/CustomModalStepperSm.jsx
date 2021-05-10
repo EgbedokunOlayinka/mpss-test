@@ -36,22 +36,24 @@ const CustomModalStepperSm = ({
         }
       });
 
-      return newArr;
-    });
-    setHours((daysData) => {
-      let newArr = [...daysData];
-      newArr.forEach((item) => {
-        if (item.text === data.text) {
-          if (tag === "opening") {
-            item.openingHour = val;
-          } else if (tag === "closing") {
-            item.closingHour = val;
-          }
-        }
-      });
+      // console.log(newArr);
 
       return newArr;
     });
+    // setHours((daysData) => {
+    //   let newArr = [...daysData];
+    //   newArr.forEach((item) => {
+    //     if (item.text === data.text) {
+    //       if (tag === "opening") {
+    //         item.openingHour = val;
+    //       } else if (tag === "closing") {
+    //         item.closingHour = val;
+    //       }
+    //     }
+    //   });
+
+    //   return newArr;
+    // });
   };
 
   const handleChangeMinute = (val) => {
@@ -67,22 +69,24 @@ const CustomModalStepperSm = ({
         }
       });
 
-      return newArr;
-    });
-    setHours((daysData) => {
-      let newArr = [...daysData];
-      newArr.forEach((item) => {
-        if (item.text === data.text) {
-          if (tag === "opening") {
-            item.openingMinute = val;
-          } else if (tag === "closing") {
-            item.closingMinute = val;
-          }
-        }
-      });
+      // console.log(newArr);
 
       return newArr;
     });
+    // setHours((daysData) => {
+    //   let newArr = [...daysData];
+    //   newArr.forEach((item) => {
+    //     if (item.text === data.text) {
+    //       if (tag === "opening") {
+    //         item.openingMinute = val;
+    //       } else if (tag === "closing") {
+    //         item.closingMinute = val;
+    //       }
+    //     }
+    //   });
+
+    //   return newArr;
+    // });
   };
 
   const minTwoDigits = (n) => {

@@ -1,60 +1,115 @@
-import { Box, Center, Text, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Text,
+  Flex,
+  Skeleton,
+  SkeletonText,
+  Link,
+} from "@chakra-ui/react";
+import NextLink from "next/link";
 import styles from "../../styles/components/PageCard.module.scss";
 
-const OrganizationCard = ({ organization }) => {
+const OrganizationCard = ({ organization, loading }) => {
+  // loading = true;
+  let orgTags = "";
+
+  if (!loading && organization.tags && organization.tags.length > 0) {
+    organization.tags.forEach((tag, index) => {
+      if (index === organization.tags.length - 1) {
+        orgTags += ` ${tag.title}`;
+      } else {
+        orgTags += `${tag.title}, `;
+      }
+    });
+  }
+
+  // console.log(orgTags);
+
   return (
-    <Box maxW={['260px', '256px']} px={[4, 6]} py={6} h={['314px', '300px']} className={styles.card}>
+    <Box
+      maxW={["260px", "256px"]}
+      px={[4, 6]}
+      py={6}
+      h={["294px", "280px"]}
+      className={styles.card}
+    >
       <Center h="64px">
-        <Box
-          w="64px"
-          h="full"
-          borderRadius="5px"
-          borderWidth="0.5px"
-          borderColor="greyTwo"
-        ></Box>
+        <Skeleton isLoaded={!loading}>
+          <Box
+            w="64px"
+            h="64px"
+            borderRadius="5px"
+            borderWidth="0.5px"
+            borderColor="greyTwo"
+          ></Box>
+        </Skeleton>
       </Center>
 
-      <Box h={12} mt="28px">
-        <Text
-          textStyle="p1Bold"
-          fontSize="16px"
-          color="customDark"
-          align="center"
-        >
-          {organization ? "ABC Organization" : "ABC Organization Limited"}
-        </Text>
+      <Box mt="28px">
+        <Skeleton isLoaded={!loading}>
+          <NextLink href={"/organizations/1"}>
+            <Link
+              _hover={{ opacity: "0.85", textTransform: "none" }}
+              textStyle="p1Bold"
+              fontSize="16px"
+              color="customDark"
+              align="center"
+              noOfLines={1}
+            >
+              {organization.name}
+            </Link>
+          </NextLink>
+          {/* <Text
+            textStyle="p1Bold"
+            fontSize="16px"
+            color="customDark"
+            align="center"
+            noOfLines={1}
+          >
+            {organization.name}
+          </Text> */}
+        </Skeleton>
       </Box>
 
-      <Text
-        color="veryDark"
-        textStyle="p2Regular"
-        mt="11px"
-        noOfLines={1}
-        align="center"
-      >
-        Manufacturing
-      </Text>
+      <Skeleton isLoaded={!loading}>
+        <Text
+          color="veryDark"
+          textStyle="p2Regular"
+          mt="8px"
+          noOfLines={1}
+          align="center"
+        >
+          {organization.sector}
+        </Text>
+      </Skeleton>
 
-      <Text
-        color="veryDark"
-        textStyle="p2Regular"
-        mt="11px"
-        noOfLines={2}
-        align="center"
-      >
-        construction, building, engineering, architecture
-      </Text>
+      <SkeletonText isLoaded={!loading}>
+        <Text
+          color="veryDark"
+          textStyle="p2Regular"
+          mt="8px"
+          noOfLines={2}
+          align="center"
+          h="42px"
+        >
+          {orgTags}
+        </Text>
+      </SkeletonText>
 
-      <Flex
-        px={['40px', '20px']}
-        mt={4}
-        align="center"
-        justify="space-between"
-        textStyle="p3Regular"
-      >
-        <Text color="#219653">Edit</Text>
-        <Text color="#EB5757">Delete</Text>
-      </Flex>
+      <Skeleton isLoaded={!loading}>
+        <Flex
+          px={["40px", "20px"]}
+          mt="21px"
+          align="center"
+          justify="space-between"
+          textStyle="p3Regular"
+        >
+          <Text color="#219653">Edit</Text>
+
+          <Text color="#EB5757">Delete</Text>
+        </Flex>
+      </Skeleton>
     </Box>
   );
 };

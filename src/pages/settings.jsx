@@ -4,7 +4,7 @@ import Header from "../components/header/Header";
 
 const Settings = ({ sidebarOpen, setSidebarOpen }) => {
   return (
-    <Box position="relative" h="100%">
+    <Box position="relative" h="100%" px={6}>
       <Header
         title="Settings"
         sidebarOpen={sidebarOpen}

@@ -1,9 +1,17 @@
 import React from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { Flex, Box, Link, useMediaQuery } from "@chakra-ui/react";
+import { Flex, Box, Link, useMediaQuery, Button, Text } from "@chakra-ui/react";
 
-export default ({ href, children, text, setSidebarOpen, sidebarOpen }) => {
+const CustomLink = ({
+  href,
+  children,
+  text,
+  setSidebarOpen,
+  sidebarOpen,
+  btn,
+  func,
+}) => {
   const [isSmallerThan768] = useMediaQuery("(max-width: 767px)");
   const router = useRouter();
 
@@ -34,14 +42,28 @@ export default ({ href, children, text, setSidebarOpen, sidebarOpen }) => {
         <Box h="full" mt={["2.5px", null, "1.5px"]}>
           {React.cloneElement(children, { className, active })}
         </Box>
-        <Link
-          className="navlink"
-          _hover={{ opacity: "0.85", textTransform: "none" }}
-          ml="8px"
-        >
-          {text}
-        </Link>
+        {btn ? (
+          <Text
+            className="navlink"
+            _hover={{ opacity: "0.85", textTransform: "none" }}
+            ml="8px"
+            cursor="pointer"
+            onClick={() => func()}
+          >
+            {text}
+          </Text>
+        ) : (
+          <Link
+            className="navlink"
+            _hover={{ opacity: "0.85", textTransform: "none" }}
+            ml="8px"
+          >
+            {text}
+          </Link>
+        )}
       </Flex>
     </NextLink>
   );
 };
+
+export default CustomLink;

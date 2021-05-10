@@ -8,13 +8,16 @@ import {
   Icon,
   Text,
   useMediaQuery,
+  Link,
 } from "@chakra-ui/react";
 import { FiMail, FiBell } from "react-icons/fi";
 import Hamburger from "./Hamburger";
 import { useSelector } from "react-redux";
 import capitalize from "../../utils/capitalize";
+import NextLink from "next/link";
+import { ChevronLeftIcon } from "@chakra-ui/icons";
 
-const Header = ({ title, sidebarOpen, setSidebarOpen }) => {
+const Header = ({ title, sidebarOpen, setSidebarOpen, sub }) => {
   const [isSmallerThan768] = useMediaQuery("(max-width: 767px)");
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -30,9 +33,22 @@ const Header = ({ title, sidebarOpen, setSidebarOpen }) => {
         />
       )}
 
-      <Heading textStyle={["h4", "h3"]} color="customDark">
-        {title}
-      </Heading>
+      {sub ? (
+        <NextLink href={sub}>
+          <Link
+            _hover={{ opacity: "0.85", textTransform: "none" }}
+            textStyle="p1Regular"
+            color="customDark"
+          >
+            <ChevronLeftIcon h={6} w={6} color="#27459c" />
+            {title}
+          </Link>
+        </NextLink>
+      ) : (
+        <Heading textStyle={["h4", "h3"]} color="customDark">
+          {title}
+        </Heading>
+      )}
 
       <HStack spacing="40px">
         {!isSmallerThan768 && (

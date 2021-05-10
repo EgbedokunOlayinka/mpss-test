@@ -24,7 +24,7 @@ const Circles = ({ sidebarOpen, setSidebarOpen }) => {
   };
 
   return (
-    <Box position="relative" h="100%">
+    <Box position="relative" h="100%" px={6}>
       <CreateNewCircle isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
 
       <InnerPageHeader

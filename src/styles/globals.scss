@@ -14,9 +14,13 @@ html {
 
 .selected-navlink {
   background-color: #f2d9bb;
-  color: #293c73 !important;
+  color: #27459c !important;
   border-radius: 6px;
   font-weight: 700;
+}
+
+.shadowed {
+  box-shadow: 0px 4px 12px rgba(213, 217, 227, 0.2);
 }
 
 // @media screen and (min-width: 768px) {
