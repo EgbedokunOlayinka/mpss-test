@@ -72,7 +72,7 @@ export const userLoginReducer = (
   switch (type) {
     case USER_LOGIN_REQUEST:
       return {
-        loading: true,
+        // loading: false,
         user: null,
         error: null,
         loginLoading: true,
@@ -85,7 +85,7 @@ export const userLoginReducer = (
       };
     case USER_LOGIN_SUCCESS:
       return {
-        loading: false,
+        // loading: false,
         user: payload,
         error: null,
         loginLoading: false,
@@ -98,7 +98,7 @@ export const userLoginReducer = (
       };
     case USER_LOGIN_FAIL:
       return {
-        loading: false,
+        // loading: false,
         user: null,
         error: payload,
         loginLoading: false,
