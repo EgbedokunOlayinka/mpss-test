@@ -26,7 +26,7 @@ import spaceWord from "../../utils/spaceCamel";
 import CustomModalButton from "../global/CustomModalButton";
 import CustomModalPictureUpload from "../global/CustomModalPictureUpload";
 import { connect, useSelector } from "react-redux";
-import { addContact } from "../../store/contact/actions";
+// import { addContact } from "../../store/contact/actions";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -34,7 +34,10 @@ const schema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   phoneCode: yup.string().required(),
-  phoneNumber: yup.number().required(),
+  phoneNumber: yup
+    .number()
+    .typeError("Input must be a valid number")
+    .required(),
   profilePicture: yup.string(),
 });
 

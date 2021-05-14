@@ -35,7 +35,7 @@ export const addOrganization = (values) => async (dispatch) => {
       weekly_events: values.weeklyEvents,
       company_logo: "empty string for now",
       // contactName: values.contactName,
-      contact_email: values.contactEmail,
+      // contact_email: values.contactEmail,
       // contactPhoneNumber: `${values.contactPhoneCode}${String(
       //   values.contactPhoneNumber
       // )}`,
@@ -121,9 +121,9 @@ export const getAllOrganizations = () => async (dispatch) => {
     const { data } = await axios.get("/mspstreamgetorgs.php", config);
 
     data.data.forEach((org) => {
-      org.tags = JSON.parse(org.tags);
-      org.weekly_events = JSON.parse(org.weekly_events);
-      org.opening_hours = JSON.parse(org.opening_hours);
+      org.org_tags = JSON.parse(org.org_tags);
+      org.org_weekly_events = JSON.parse(org.org_weekly_events);
+      org.org_opening_hours = JSON.parse(org.org_opening_hours);
     });
 
     console.log(data.data);

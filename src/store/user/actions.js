@@ -73,6 +73,7 @@ export const userRegister = ({
       payload: data.data,
     });
   } catch (err) {
+    console.log(err);
     const toast = createStandaloneToast();
     // const customToast = createStandaloneToast({ theme: yourCustomTheme })
     toast({
@@ -219,7 +220,7 @@ export const userVerify = () => async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     dispatch({
       type: USER_VERIFY_FAIL,
     });
@@ -236,7 +237,7 @@ export const userLogout = () => async (dispatch) => {
 
   const cookies = new Cookies();
 
-  cookies.set("mspsUser", "", {
+  cookies.remove("mspsUser", {
     path: "/",
     maxAge: 0,
     secure: false,

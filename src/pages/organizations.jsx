@@ -66,7 +66,10 @@ const Organizations = ({
       />
 
       {listView ? (
-        <OrganizationsListView data={data ? data : filledArray} />
+        <OrganizationsListView
+          data={data ? data : filledArray}
+          loading={loading}
+        />
       ) : (
         <OrganizationsGridView
           data={data ? data : filledArray}

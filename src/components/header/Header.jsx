@@ -65,7 +65,9 @@ const Header = ({ title, sidebarOpen, setSidebarOpen, sub }) => {
         <HStack spacing="13px">
           {!isSmallerThan768 && (
             <Text textStyle="p2Bold" color="veryDark">
-              {`${capitalize(user.first_name)} ${capitalize(user.last_name)}`}
+              {`${capitalize(user.user_first_name)} ${capitalize(
+                user.user_last_name
+              )}`}
             </Text>
           )}
           <HeaderDropdown />

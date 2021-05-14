@@ -26,7 +26,7 @@ import CustomModalButton from "../global/CustomModalButton";
 import CustomModalSelect from "../global/CustomModalSelect";
 import titles from "../../data/titles.json";
 import { connect, useSelector } from "react-redux";
-import { addCircle } from "../../store/circle/actions";
+// import { addCircle } from "../../store/circle/actions";
 
 const schema = yup.object().shape({
   circleName: yup.string().required(),
@@ -208,4 +208,5 @@ const modalStyles = {
 //   circle: state.addCircle,
 // });
 
-export default connect(null, { addCircle })(CreateNewCircle);
+// export default connect(null, { addCircle })(CreateNewCircle);
+export default CreateNewCircle;

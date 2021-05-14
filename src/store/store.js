@@ -12,8 +12,8 @@ import {
   addOrganizationReducer,
   getOrganizationsReducer,
 } from "./organization/reducer";
-import { addContactReducer } from "./contact/reducer";
-import { addCircleReducer } from "./circle/reducer";
+import { addContactReducer, getContactsReducer } from "./contact/reducer";
+import { addCircleReducer, getCirclesReducer } from "./circle/reducer";
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== "production") {
@@ -31,6 +31,8 @@ const combinedReducer = combineReducers({
   userLink: userLinkReducer,
   addOrganization: addOrganizationReducer,
   getOrganizations: getOrganizationsReducer,
+  getContacts: getContactsReducer,
+  getCircles: getCirclesReducer,
   addContact: addContactReducer,
   addCircle: addCircleReducer,
 });

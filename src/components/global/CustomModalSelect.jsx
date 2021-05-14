@@ -1,7 +1,17 @@
 import React from "react";
-import { FormControl, FormLabel, Select, Text, Box } from "@chakra-ui/react";
-import { MdArrowDropDown } from "react-icons/md";
+import {
+  FormControl,
+  FormLabel,
+  Select,
+  Text,
+  Box,
+  Icon,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { MdArrowDropDown, MdErrorOutline } from "react-icons/md";
 import styles from "../../styles/components/CustomModalSelect.module.scss";
+import logstyles from "../../styles/pages/Login.module.scss";
+import spaceWord from "../../utils/spaceCamel";
 
 const CustomModalSelect = ({
   required,
@@ -53,7 +63,7 @@ const CustomModalSelect = ({
       >
         {data.map((item, index) => (
           <option
-            key={index}
+            key={item.id ? item.id : index}
             value={item.title}
             className={styled ? styles.option : null}
           >
@@ -61,6 +71,14 @@ const CustomModalSelect = ({
           </option>
         ))}
       </Select>
+      <FormErrorMessage textStyle="p2Bold">
+        <Icon as={MdErrorOutline} mr={1} />
+        <Text className={logstyles.error}>
+          {errors[name] && errors[name].message
+            ? spaceWord(errors[name].message)
+            : null}
+        </Text>
+      </FormErrorMessage>
     </FormControl>
   );
 };

@@ -57,7 +57,7 @@ const schema = yup.object().shape({
   skype: yup.string().required().matches(URL, "Link not valid"),
   backgroundInfo: yup.string(),
   // contactName: yup.string().required(),
-  contactEmail: yup.string().email().required(),
+  // contactEmail: yup.string().email().required(),
   // contactPhoneCode: yup.string().required(),
   // contactPhoneNumber: yup.number().required(),
 });
@@ -136,11 +136,19 @@ const AddNewOrganization = ({
     resolver: yupResolver(schema),
   });
 
+  let finalHours = [];
+  let finalEvents = [];
+
   const onSubmit = (values) => {
     // values.weeklyEvents = totalEvents;
-    values.weeklyEvents = submitEvents();
-    // values.openingHours = hours;
-    values.openingHours = submitHours();
+    // console.log({ events: submitEvents() });
+    // console.log({ hours: submitHours() });
+    submitEvents();
+    submitHours();
+    // console.log(finalEvents);
+    // console.log(finalHours);
+    values.weeklyEvents = finalEvents;
+    values.openingHours = finalHours;
     values.tags = totalTags;
     // console.log(values);
     // alert(JSON.stringify(values));
@@ -152,7 +160,8 @@ const AddNewOrganization = ({
   };
 
   const getEvents = (arr) => {
-    console.log(arr);
+    // console.log({ events: arr });
+    finalEvents = arr;
     return arr;
   };
 
@@ -161,7 +170,8 @@ const AddNewOrganization = ({
   };
 
   const getHours = (arr) => {
-    console.log(arr);
+    // console.log({ hours: arr });
+    finalHours = arr;
     return arr;
   };
 
@@ -393,13 +403,13 @@ const AddNewOrganization = ({
                   required={true}
                   errors={errors}
                 /> */}
-                <CustomModalInput
+                {/* <CustomModalInput
                   name="contactEmail"
                   title="Contact Email"
                   customref={register}
                   required={true}
                   errors={errors}
-                />
+                /> */}
                 {/* <Box>
                   <FormControl
                     isInvalid={!!errors?.contactPhoneNumber?.message}
@@ -448,6 +458,7 @@ const AddNewOrganization = ({
                 </CustomModalButton>
                 <CustomModalButton
                   isLoading={loading}
+                  // disabled={!!errors.email || !!errors.password}
                   type="submit"
                   dark={true}
                   full={true}

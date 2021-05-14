@@ -1,159 +1,57 @@
 import {
-  ADD_CONTACT_FIRST_SUCCESS,
-  ADD_CONTACT_FIRST_FAIL,
-  ADD_CONTACT_FIRST_REQUEST,
+  ADD_CONTACT_SUCCESS,
+  ADD_CONTACT_FAIL,
+  ADD_CONTACT_REQUEST,
+  GET_CONTACTS_REQUEST,
+  GET_CONTACTS_SUCCESS,
+  GET_CONTACTS_FAIL,
 } from "./constants";
 import axios from "axios";
 import qs from "qs";
 import { createStandaloneToast } from "@chakra-ui/react";
 import capitalize from "../../utils/capitalize";
+import getToken from "../../utils/getToken";
+import dayjs from "dayjs";
 
-// export addContactFirst = ({
-//     email,
-//   title,
-//   firstName,
-//   lastName,
-//   phoneNumber,
-//   phoneCode,
-//   profilePicture,
-// }) => async (dispatch) => {
-//     const newObj = {
-//         title,
-//         email,
-//         firstName,
-//         lastName,
-//         profilePicture,
-//         phoneNumber: `${phoneCode}${String(phoneNumber)}`,
-//       };
+axios.defaults.baseURL = "https://rocky-sands-09711.herokuapp.com";
+// axios.defaults.baseURL = "http://localhost:8080/smtpp";
+// axios.defaults.baseURL = "https://127.0.0.1/smtpp";
 
-//       const transformed = qs.stringify(newObj);
-
-//       console.log(newObj);
-//       console.log(transformed);
-
-//       dispatch({
-//         type: ADD_CONTACT_REQUEST,
-//       });
-// }
-
-export const addContact = ({
-  email,
-  title,
-  firstName,
-  lastName,
-  phoneNumber,
-  phoneCode,
-  profilePicture,
-}) => async (dispatch) => {
+export const addContact = (values) => async (dispatch) => {
   try {
     const newObj = {
-      title,
-      email,
-      firstName,
-      lastName,
-      profilePicture,
-      phoneNumber: `${phoneCode}${String(phoneNumber)}`,
+      email: values.email,
+      responsibility: values.responsibility,
+      profile_picture: "test for now",
+      circle_id: values.circle_id,
+      organization_id: values.organization_id,
     };
 
-    const transformed = qs.stringify(newObj);
+    // const transformed = qs.stringify(newObj);
 
-    console.log(newObj);
-    console.log(transformed);
+    console.log({ newObj });
+    // console.log(transformed);
 
     dispatch({
-      type: ADD_CONTACT_FIRST_REQUEST,
+      type: ADD_CONTACT_REQUEST,
     });
 
     const config = {
-      // withCredentials: true,
+      withCredentials: true,
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+        "Access-Token": getToken(),
       },
     };
 
     const { data } = await axios.post(
-      "https://splattai.com/mspstreamaddcontact.php",
-      //   "http://localhost:8080/zuri/test.php",
-      transformed,
+      "/mspstreamaddcontact.php",
+      newObj,
       config
     );
 
-    console.log(data);
-
-    // const toast = createStandaloneToast();
-    // toast({
-    //   title: "Success!",
-    //   description: "The Contact has been added successfully",
-    //   status: "success",
-    //   duration: 5000,
-    //   isClosable: true,
-    //   position: "top",
-    //   variant: "solid",
-    // });
-
-    dispatch({
-      type: ADD_CONTACT_FIRST_SUCCESS,
-      payload: data.data,
-    });
-  } catch (err) {
-    const toast = createStandaloneToast();
-    toast({
-      title: "Failed to add Contact",
-      description:
-        err.response && err.response.data.message
-          ? capitalize(err.response.data.message)
-          : "Your request could not be completed. Please try again",
-      status: "error",
-      duration: 5000,
-      isClosable: true,
-      position: "top",
-      variant: "solid",
-    });
-
-    dispatch({
-      type: ADD_CONTACT_FIRST_FAIL,
-      payload:
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : "Your request could not be completed. Please try again",
-    });
-  }
-};
-
-export const addContactSecond = (values) => async (dispatch) => {
-  try {
-    // const newObj = {
-    //   organization,
-    //   circle,
-    //   responsibility,
-    // };
-
-    const transformed = qs.stringify(values);
-
-    // console.log(newObj);
-    console.log(transformed);
-
-    dispatch({
-      type: ADD_CONTACT_FIRST_REQUEST,
-    });
-
-    const config = {
-      // withCredentials: true,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-        // "Content-Type": "application/json",
-      },
-    };
-
-    const { data } = await axios.post(
-      "https://splattai.com/addcontacts2.php",
-      //   "http://localhost:8080/zuri/test.php",
-      transformed,
-      config
-    );
-
-    console.log(data);
+    console.log({ data });
 
     const toast = createStandaloneToast();
     toast({
@@ -167,8 +65,8 @@ export const addContactSecond = (values) => async (dispatch) => {
     });
 
     dispatch({
-      type: ADD_CONTACT_FIRST_SUCCESS,
-      payload: data.data,
+      type: ADD_CONTACT_SUCCESS,
+      payload: data.message,
     });
   } catch (err) {
     const toast = createStandaloneToast();
@@ -186,7 +84,62 @@ export const addContactSecond = (values) => async (dispatch) => {
     });
 
     dispatch({
-      type: ADD_CONTACT_FIRST_FAIL,
+      type: ADD_CONTACT_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : "Your request could not be completed. Please try again",
+    });
+  }
+};
+
+export const getAllContacts = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_CONTACTS_REQUEST,
+    });
+
+    const config = {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+        "Access-Token": getToken(),
+      },
+    };
+
+    const { data } = await axios.get("/mspstreamgetcontacts.php", config);
+
+    // data.data.forEach((org) => {
+    //   org.tags = JSON.parse(org.tags);
+    //   org.weekly_events = JSON.parse(org.weekly_events);
+    //   org.opening_hours = JSON.parse(org.opening_hours);
+    // });
+
+    console.log({ contacts: data.data });
+
+    dispatch({
+      type: GET_CONTACTS_SUCCESS,
+      payload: data.data,
+    });
+  } catch (err) {
+    console.log(err);
+    const toast = createStandaloneToast();
+    toast({
+      title: "Failed to get contacts",
+      description:
+        err.response && err.response.data.message
+          ? capitalize(err.response.data.message)
+          : "Your request could not be completed. Please try again",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+      variant: "solid",
+    });
+
+    dispatch({
+      type: GET_CONTACTS_FAIL,
       payload:
         err.response && err.response.data.message
           ? err.response.data.message

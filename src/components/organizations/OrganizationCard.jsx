@@ -14,9 +14,9 @@ const OrganizationCard = ({ organization, loading }) => {
   // loading = true;
   let orgTags = "";
 
-  if (!loading && organization.tags && organization.tags.length > 0) {
-    organization.tags.forEach((tag, index) => {
-      if (index === organization.tags.length - 1) {
+  if (!loading && organization.org_tags && organization.org_tags.length > 0) {
+    organization.org_tags.forEach((tag, index) => {
+      if (index === organization.org_tags.length - 1) {
         orgTags += ` ${tag.title}`;
       } else {
         orgTags += `${tag.title}, `;
@@ -57,18 +57,9 @@ const OrganizationCard = ({ organization, loading }) => {
               align="center"
               noOfLines={1}
             >
-              {organization.name}
+              {organization.org_name}
             </Link>
           </NextLink>
-          {/* <Text
-            textStyle="p1Bold"
-            fontSize="16px"
-            color="customDark"
-            align="center"
-            noOfLines={1}
-          >
-            {organization.name}
-          </Text> */}
         </Skeleton>
       </Box>
 
@@ -80,7 +71,7 @@ const OrganizationCard = ({ organization, loading }) => {
           noOfLines={1}
           align="center"
         >
-          {organization.sector}
+          {organization.org_sector}
         </Text>
       </Skeleton>
 
